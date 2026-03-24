@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heritage & Struggle — Brotherhood of Blended Bloodlines Committee</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--red:#b80000;--dark:#0f0f0f;--gold:#c9a84c;--dk-gold:#8a6f30;--offwhite:#f5f0e8;--mid:#1e1e1e;--card:#161616;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Open Sans',sans-serif;background:var(--dark);color:var(--offwhite);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:2px solid var(--gold);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;line-height:1.2;text-decoration:none;}
+.nav-logo span{color:#fff;font-weight:400;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{color:rgba(245,240,232,0.7);text-decoration:none;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+
+/* HERO */
+#hero{margin-top:64px;position:relative;height:520px;overflow:hidden;display:flex;align-items:flex-end;}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.22) sepia(0.3);}
+.hero-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,5,0,1) 0%,rgba(10,5,0,0.5) 50%,transparent 100%);}
+.hero-content{position:relative;z-index:2;padding:0 80px 60px;max-width:900px;}
+.hero-kicker{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.hero-kicker::before{content:'';width:40px;height:1px;background:var(--gold);display:block;}
+.hero-title{font-family:'IM Fell English',serif;font-size:58px;line-height:1.1;color:#fff;margin-bottom:18px;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:17px;color:rgba(245,240,232,0.55);max-width:580px;line-height:1.7;}
+
+/* TAB NAV */
+#tab-nav{position:sticky;top:64px;z-index:100;background:rgba(10,8,0,0.97);border-bottom:1px solid rgba(201,168,76,0.18);display:flex;overflow-x:auto;}
+.tnav-btn{padding:16px 28px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,240,232,0.4);cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.tnav-btn:hover{color:rgba(245,240,232,0.75);}
+.tnav-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* BODY */
+.page-body{max-width:860px;margin:0 auto;padding:70px 40px 100px;}
+
+/* TAB PANELS */
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ESSAY TYPOGRAPHY */
+.essay-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.essay-title{font-family:'IM Fell English',serif;font-size:38px;line-height:1.2;color:#fff;margin-bottom:8px;}
+.essay-subtitle{font-family:'IM Fell English',serif;font-style:italic;font-size:18px;color:rgba(245,240,232,0.5);margin-bottom:28px;line-height:1.5;}
+.essay-divider{display:flex;align-items:center;gap:16px;margin-bottom:36px;}
+.essay-divider::before,.essay-divider::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,0.3),transparent);}
+.essay-divider span{color:var(--gold);font-size:16px;}
+.byline{display:flex;align-items:center;gap:14px;margin-bottom:40px;padding-bottom:28px;border-bottom:1px solid rgba(201,168,76,0.12);}
+.byline img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:1px solid rgba(201,168,76,0.3);}
+.byline-name{font-size:13px;color:rgba(245,240,232,0.8);}
+.byline-meta{font-size:11px;color:rgba(245,240,232,0.3);margin-top:2px;}
+
+/* ESSAY BODY */
+.essay-body{font-family:'IM Fell English',serif;font-size:17px;line-height:1.9;color:rgba(245,240,232,0.82);}
+.essay-body p{margin-bottom:24px;}
+.essay-body h2{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid rgba(201,168,76,0.15);}
+.essay-body h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:rgba(245,240,232,0.7);margin:32px 0 12px;}
+.essay-body blockquote{border-left:3px solid var(--red);padding:14px 24px;margin:32px 0;font-style:italic;color:rgba(245,240,232,0.6);background:rgba(255,255,255,0.02);font-size:18px;line-height:1.7;}
+.essay-body blockquote cite{display:block;margin-top:10px;font-size:12px;font-style:normal;font-family:'Open Sans',sans-serif;color:rgba(245,240,232,0.3);letter-spacing:.5px;}
+.essay-body .drop-cap::first-letter{float:left;font-family:'IM Fell English',serif;font-size:72px;line-height:0.8;padding-right:12px;padding-top:8px;color:var(--gold);}
+.pull-quote{background:rgba(184,0,0,0.06);border:1px solid rgba(184,0,0,0.2);padding:28px 32px;margin:36px 0;text-align:center;}
+.pull-quote p{font-family:'IM Fell English',serif;font-style:italic;font-size:21px;color:rgba(245,240,232,0.75);line-height:1.6;margin:0;}
+.pull-quote cite{display:block;margin-top:12px;font-size:11px;font-style:normal;font-family:'Open Sans',sans-serif;color:rgba(245,240,232,0.3);letter-spacing:1px;text-transform:uppercase;}
+.essay-img{width:100%;margin:36px 0;}
+.essay-img img{width:100%;height:320px;object-fit:cover;display:block;border:1px solid rgba(201,168,76,0.12);}
+.essay-img figcaption{font-size:11px;color:rgba(245,240,232,0.3);font-style:italic;padding:8px 0;font-family:'Open Sans',sans-serif;border-bottom:1px solid rgba(201,168,76,0.08);}
+.footnote-list{list-style:none;margin-top:48px;padding-top:24px;border-top:1px solid rgba(201,168,76,0.12);}
+.footnote-list li{font-family:'Open Sans',sans-serif;font-size:11px;color:rgba(245,240,232,0.3);line-height:1.7;padding:4px 0;display:flex;gap:10px;}
+.footnote-list li span{color:var(--gold);flex-shrink:0;}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:28px;margin:36px 0;}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.4),transparent);}
+.tl-item{position:relative;margin-bottom:28px;}
+.tl-item::before{content:'';position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--dk-gold);border:1px solid var(--gold);}
+.tl-year{font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;color:var(--gold);margin-bottom:4px;}
+.tl-text{font-family:'Open Sans',sans-serif;font-size:13px;color:rgba(245,240,232,0.6);line-height:1.6;}
+
+/* READING PROGRESS */
+#progress-bar{position:fixed;top:64px;left:0;height:2px;background:var(--red);z-index:300;transition:width .1s linear;width:0%;}
+
+/* SHARE / NAV FOOTER */
+.essay-footer{margin-top:60px;padding-top:28px;border-top:1px solid rgba(201,168,76,0.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:gap;}
+.share-row{display:flex;align-items:center;gap:10px;}
+.share-row span{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,240,232,0.3);}
+.share-btn{padding:6px 14px;background:transparent;border:1px solid rgba(201,168,76,0.2);color:rgba(245,240,232,0.4);font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .18s;}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);}
+.next-essay{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:gap .2s;display:flex;align-items:center;gap:6px;}
+.next-essay:hover{gap:10px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1200;border:1px solid var(--dk-gold);color:var(--gold);font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1px;padding:10px 22px;z-index:9999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:'Oswald',sans-serif;font-size:13px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;}
+.footer-copy{font-size:11px;color:rgba(245,240,232,0.22);}
+.footer-links{display:flex;gap:18px;}
+.footer-links a{font-size:11px;color:rgba(245,240,232,0.32);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}.nav-links{display:none;}
+  .hero-content{padding:0 24px 40px;}
+  .hero-title{font-size:36px;}
+  .page-body{padding:40px 24px 80px;}
+  footer{flex-direction:column;gap:12px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 52" width="32" height="38" style="flex-shrink:0">
+      <path d="M22 2 L41 9 L41 27 Q41 43 22 50 Q3 43 3 27 L3 9 Z" fill="#0d0805" stroke="#c9a84c" stroke-width="1.8"/>
+      <path d="M22 6 L37 12 L37 27 Q37 40 22 46 Q7 40 7 27 L7 12 Z" fill="none" stroke="rgba(201,168,76,0.22)" stroke-width="0.8"/>
+      <path d="M12 12 Q32 18.5 12 25 Q32 31.5 22 43" fill="none" stroke="#c9a84c" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M32 12 Q12 18.5 32 25 Q12 31.5 22 43" fill="none" stroke="#b80000" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="22" cy="18.5" r="2.3" fill="#fff" opacity="0.9"/>
+      <circle cx="22" cy="30" r="2.3" fill="#fff" opacity="0.9"/>
+      <polygon points="22,0 25,4 22,8 19,4" fill="#c9a84c"/>
+    </svg>
+    <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#wing">Defense Corps</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="heritage.html" class="active">Heritage</a></li>
+    <li><a href="donate.html">Donate</a></li>
+    <li><a href="members.html">Members</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <img class="hero-img" src="https://picsum.photos/1400/520?random=501" alt="">
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">Brotherhood of Blended Bloodlines Committee</div>
+    <h1 class="hero-title">Between Two Worlds:<br><em>The Hybrid Struggle</em></h1>
+    <p class="hero-sub">A collection of essays on the historical and contemporary struggles of mixed-heritage peoples — with particular focus on the Black-Asian experience in America.</p>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div id="tab-nav">
+  <button class="tnav-btn active" onclick="showTab('essay1',this)">I. Neither / Nor</button>
+  <button class="tnav-btn" onclick="showTab('essay2',this)">II. Black & Asian in America</button>
+  <button class="tnav-btn" onclick="showTab('essay3',this)">III. The Law Against Us</button>
+  <button class="tnav-btn" onclick="showTab('essay4',this)">IV. Colorism & The Internal War</button>
+  <button class="tnav-btn" onclick="showTab('essay5',this)">V. Reclaiming Identity</button>
+  <button class="tnav-btn" onclick="showTab('timeline',this)">Timeline</button>
+</div>
+
+<!-- BODY -->
+<div class="page-body">
+
+  <!-- ═══════════════════════════════════════
+       ESSAY 1: NEITHER / NOR
+  ═══════════════════════════════════════ -->
+  <div class="tab-panel active" id="panel-essay1">
+    <div class="essay-label">Essay I</div>
+    <h1 class="essay-title">Neither / Nor: The Double Exile of the Mixed-Race Body</h1>
+    <p class="essay-subtitle">On belonging nowhere and the specific exhaustion of perpetual explanation.</p>
+    <div class="essay-divider"><span>✦</span></div>
+    <div class="byline">
+      <img src="https://picsum.photos/80/80?random=601" alt="">
+      <div>
+        <div class="byline-name">Aisha St. Claire-Webb</div>
+        <div class="byline-meta">Director of Advocacy, BBBC · Published March 2026</div>
+      </div>
+    </div>
+    <div class="essay-body">
+      <p class="drop-cap">There is a particular kind of loneliness that belongs only to those who exist between categories. Not the loneliness of isolation — of having no one around you — but the loneliness of being surrounded by people who are all, in some fundamental way, not quite you. It is the loneliness of the room where everyone else seems to have arrived already knowing where they stand, and you are still, quietly, trying to figure out which wall to lean against.</p>
+      <p>This is the condition of the mixed-race individual in America. It is not a new condition — it predates the republic itself — but it is one that has been systematically ignored, romanticized, pathologized, and erased in roughly equal measure, depending on the era and the convenience of those doing the categorizing.</p>
+
+      <figure class="essay-img">
+        <img src="https://picsum.photos/860/320?random=502" alt="Essay image">
+        <figcaption>The experience of existing between racial categories has shaped the lives of millions of Americans across every generation.</figcaption>
+      </figure>
+
+      <h2>The Architecture of Belonging</h2>
+      <p>American racial identity was never designed to accommodate complexity. The one-drop rule — the legal and social principle that any traceable African ancestry made a person Black, regardless of appearance, culture, or self-identification — was not a biological observation. It was a property law. It existed to ensure that the children of enslaved women and their enslavers remained enslaved, that wealth did not travel across the color line through inheritance, and that the brutal hierarchy of American society could be maintained with maximum efficiency.</p>
+      <p>The one-drop rule was only one instrument in a much larger apparatus. The broader project of American racial categorization — codified in census classifications, antimiscegenation statutes, naturalization law, and school segregation policies — was always fundamentally about sorting people into boxes that served the interests of those who built the boxes. People of mixed heritage have never fit cleanly into those boxes. And the system's response to that failure of fit has never been to question the boxes. It has always been to punish the people.</p>
+
+      <div class="pull-quote">
+        <p>"To be mixed in America is to be a living refutation of a lie the country has told about itself for four hundred years. The country does not thank you for this."</p>
+        <cite>— Aisha St. Claire-Webb</cite>
+      </div>
+
+      <h2>The Specific Weight of Explanation</h2>
+      <p>Ask any person of mixed heritage about the texture of their daily life and you will hear, eventually, about the question. Not a question — <em>the</em> question. "What are you?" It arrives in checkout lines and classrooms, at job interviews and dinner parties, from strangers and from people who have known you for years. It is asked with curiosity, with suspicion, with the unmistakable subtext of a system that needs you to declare yourself before it can decide how to treat you.</p>
+      <p>The exhaustion of this is not merely social. It is cognitive, emotional, and cumulative. Every mixed-race person carries an internal archive of answers, calibrated to context, to safety, to the particular racial anxieties of whoever is asking. You learn early that the wrong answer — or more precisely, an answer that fails to satisfy — produces a follow-up. "But what are you <em>really</em>?" The question behind the question: pick a side. The system needs you legible. Your complexity is an inconvenience.</p>
+      <p>This pressure to choose — to simplify, to perform monoracial identity for the comfort of others — is one of the foundational injuries of the mixed-race experience. It is a slow, ambient demand that you diminish yourself. And it comes not just from white America, but from within communities of color, where identity policing can be just as fierce, and where the stakes of perceived inauthenticity carry their own particular weight.</p>
+
+      <h2>The Double Exile</h2>
+      <p>The mixed-race person often finds themselves subject to suspicion from multiple directions simultaneously. Too light to be fully trusted in one community, too dark to be fully welcome in another. Not Black enough. Not Asian enough. Not white enough. The goalposts move depending on who is watching and what they need you to be. The result is a form of social homelessness — a chronic condition of partial belonging that is rarely named and almost never addressed in the mainstream discourse on race in America.</p>
+      <p>What the BBBC understands, and what this collection of essays attempts to document, is that this experience is not peripheral. It is not an edge case or a footnote. It is the experience of tens of millions of Americans, and it is getting more common with every generation. The question is not whether mixed-heritage identity will become a central feature of American racial life. It already is. The question is whether American institutions — legal, political, cultural — will evolve fast enough to stop treating complexity as a problem to be solved rather than a reality to be honored.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ESSAY 2: BLACK & ASIAN IN AMERICA
+  ═══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-essay2">
+    <div class="essay-label">Essay II</div>
+    <h1 class="essay-title">Between Black and Asian: A Hybrid History in America</h1>
+    <p class="essay-subtitle">On the particular struggles of those who carry both inheritances — and the communities that have not always known what to do with them.</p>
+    <div class="essay-divider"><span>✦</span></div>
+    <div class="byline">
+      <img src="https://picsum.photos/80/80?random=602" alt="">
+      <div>
+        <div class="byline-name">Marcus Obi-Chen</div>
+        <div class="byline-meta">Defense Corps Sergeant, Detroit HQ · Contributing Writer</div>
+      </div>
+    </div>
+    <div class="essay-body">
+      <p class="drop-cap">The Black-Asian mixed-race experience in America is among the most under-examined and least understood of all hybrid identities, despite being one of the oldest. It is older than the term "multiracial." It is older than most of the institutions that now struggle to categorize it. It stretches back to the 19th century, when Black and Asian laborers worked alongside one another in the mines and on the railroads of the American West, lived in the same boarding houses, ate in the same restaurants — the ones that would have them — and sometimes, inevitably, built families together.</p>
+      <p>Those families existed largely in the shadows. They were illegal in many states, invisible in the census, and unwelcome in the mainstream of both the Black and Asian communities of the era, each of which was fighting its own desperate battle for survival and social standing in a country that wanted neither of them.</p>
+
+      <figure class="essay-img">
+        <img src="https://picsum.photos/860/320?random=503" alt="Essay image">
+        <figcaption>Black and Asian communities have shared geographic, economic, and social spaces throughout American history — a history that produced hybrid families largely erased from the historical record.</figcaption>
+      </figure>
+
+      <h2>Shared Ground, Separate Struggles</h2>
+      <p>The history of Black-Asian contact in America is inseparable from the history of American labor exploitation. Both communities were brought to or confined within the country as sources of cheap, expendable labor. Chinese workers built the transcontinental railroad under conditions of near-slavery. Black Americans <em>were</em> enslaved, and then, after Emancipation, were systematically excluded from the economic mobility that the railroad and the industrial economy were supposed to make possible.</p>
+      <p>In cities like San Francisco, Los Angeles, and New York, Black and Asian communities occupied overlapping urban geographies — not because of natural affinity, but because they were both excluded from white neighborhoods through restrictive covenants, redlining, and the blunt instrument of racial terror. This shared exclusion created proximity, and proximity created relationships. It created, over generations, children.</p>
+
+      <blockquote>
+        "My grandmother was Chinese and my grandfather was Black. They met in a laundry on Stockton Street in San Francisco in 1923. The state of California said their marriage was illegal. They got married anyway. I am what happened when they refused to obey."
+        <cite>— BBBC member testimony, Annual Summit 2024</cite>
+      </blockquote>
+
+      <h2>The Post-War Generation and the Korean and Vietnam Conflicts</h2>
+      <p>A significant wave of Black-Asian mixed-race Americans emerged from the aftermath of the Korean and Vietnam Wars. Black soldiers — serving in a military that had only been formally desegregated in 1948 and was still riven with institutional racism — formed relationships with Korean, Vietnamese, Filipino, and Japanese women in the countries where they were stationed. The children of those relationships occupied a uniquely difficult position: too Black for Asian societies that prized ethnic purity, and too Asian — or simply too foreign — for the Black American communities their fathers returned to.</p>
+      <p>Many of these children, known in South Korea as <em>honhyeol</em> and in Vietnam as <em>con lai</em>, faced extraordinary discrimination in their birth countries. Those who came to the United States found a different but equally inhospitable landscape. They were exotic to white America, suspect to Black America, and invisible to Asian America. The word for what they were — mixed, hybrid, blended — had no positive valence in any of the cultures that had produced them.</p>
+
+      <div class="pull-quote">
+        <p>"To be Black and Asian in America is to carry two histories of exclusion in a single body — and to be told, by both, that you have not suffered enough to belong."</p>
+        <cite>— Marcus Obi-Chen, BBBC Contributing Writer</cite>
+      </div>
+
+      <h2>Contemporary Pressures: The Model Minority and the Stereotype's Shadow</h2>
+      <p>The "model minority" myth — the stereotype of Asian Americans as universally educated, economically successful, and politically compliant — has caused particular harm to Black-Asian mixed-race individuals. It operates as a wedge, positioning Asian Americans against Black Americans in a manufactured competition for social legitimacy, and it disappears the enormous diversity of the Asian American experience, including the very existence of Black-Asian hybrid people.</p>
+      <p>For Black-Asian individuals, the model minority myth creates an impossible double standard. When they succeed academically or professionally, it is attributed to their Asian heritage. When they struggle, or when they are subjected to the racism that Black Americans face systemically, they are told — implicitly or explicitly — that their Asian side should have protected them. The result is a kind of identity math in which neither half adds up to a whole, and the person is perpetually in deficit.</p>
+
+      <h2>Solidarity and Its Limits</h2>
+      <p>The spring of 2020 and the COVID-19 pandemic produced two simultaneous crises of racial violence in America: the murder of George Floyd and the explosion of anti-Asian hate crimes. Both communities were targeted. Both communities organized. And for a brief, fragile moment, there was public conversation about Black-Asian solidarity — a recognition that the two communities shared common enemies in white supremacy and the racial scapegoating politics of the American right.</p>
+      <p>That solidarity, real and important as it was, also exposed fault lines. There were incidents of anti-Asian violence perpetrated by Black individuals, and incidents of anti-Black racism within Asian American communities — fault lines that a history of manufactured competition and mutual misrepresentation had made almost inevitable. For Black-Asian mixed-race Americans, these moments were particularly painful. They were caught between communities that were simultaneously reaching toward each other and pulling apart, asked to pick a side in a conflict they embodied the transcendence of.</p>
+      <p>The BBBC's position is not that these fault lines do not exist. They do. But the existence of Black-Asian hybrid people — millions of them, living proof that these communities have always been more intertwined than the political discourse allows — is itself a form of solidarity. A genealogical fact that no amount of manufactured division can fully erase.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ESSAY 3: THE LAW AGAINST US
+  ═══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-essay3">
+    <div class="essay-label">Essay III</div>
+    <h1 class="essay-title">The Law Against Us: Antimiscegenation, Identity Erasure, and the Courts</h1>
+    <p class="essay-subtitle">A legal history of how American law has worked to prevent, punish, and erase mixed-race people and their families.</p>
+    <div class="essay-divider"><span>✦</span></div>
+    <div class="byline">
+      <img src="https://picsum.photos/80/80?random=603" alt="">
+      <div>
+        <div class="byline-name">Sofia Nguyen-Brooks</div>
+        <div class="byline-meta">Legislative Correspondent, BBBC · J.D., Howard University School of Law</div>
+      </div>
+    </div>
+    <div class="essay-body">
+      <p class="drop-cap">The history of mixed-race people in America is, to a significant degree, a history of legal persecution. From the earliest colonial antimiscegenation statutes of the 17th century to the racial classification systems that persist in federal bureaucracy today, American law has consistently worked to prevent the existence of hybrid people, to punish those who came into existence anyway, and to erase the evidence of their lives from the official record.</p>
+      <p>Understanding this history is not merely an academic exercise. It is the foundation of the BBBC's legislative agenda, and it is essential context for understanding why the struggles of mixed-race people — including Black-Asian hybrid individuals — are not simply personal or cultural, but structural and political.</p>
+
+      <h2>The Colonial Origins: Slavery and the Fear of Mixture</h2>
+      <p>The first antimiscegenation laws in North America were enacted in Virginia in 1691, prohibiting marriage between white colonists and Black, mulatto, or Native American people. These laws were not primarily motivated by racial disgust, though that was certainly present. They were motivated by property. Mixed-race children of enslaved women and free men were a problem for the system of hereditary slavery: they complicated inheritance, blurred the legal distinctions on which slavery depended, and — most dangerously — produced free people of color who could not be easily re-enslaved.</p>
+      <p>The solution was legislative brutality. Mixed-race children of enslaved mothers were enslaved regardless of their fathers' status. Mixed-race marriages were criminalized. The free movement and civil standing of mixed-race people were progressively restricted. By the time of the Civil War, virtually every slave state had statutes specifically targeting mixed-race individuals, their families, and their property rights.</p>
+
+      <h2>The Exclusion Acts and Asian Hybridity</h2>
+      <p>The legal persecution of Black-Asian hybrid families operated through two parallel legal frameworks. The antimiscegenation laws targeting Black Americans were joined, from the 1870s onward, by a series of federal exclusion acts targeting Asian immigrants — particularly Chinese, Japanese, Filipino, Korean, and South Asian people — that progressively restricted Asian immigration, naturalization, land ownership, and intermarriage with white Americans.</p>
+      <p>The Cable Act of 1922 stripped American women of their citizenship if they married men ineligible for citizenship — a category that included virtually all Asian men. The Alien Land Laws, enacted across multiple Western states, prohibited Asian immigrants from owning agricultural land. The internment of Japanese Americans during World War II — explicitly justified on racial grounds — demonstrated the extent to which Asian Americans could be treated as enemy bodies regardless of citizenship, length of residence, or demonstrated loyalty.</p>
+
+      <blockquote>
+        "The law did not simply tolerate the persecution of mixed-race families. The law was the persecution."
+        <cite>— Sofia Nguyen-Brooks</cite>
+      </blockquote>
+
+      <h2>Loving v. Virginia and Its Limits</h2>
+      <p>The Supreme Court's 1967 decision in <em>Loving v. Virginia</em>, which struck down all remaining state antimiscegenation laws as unconstitutional, is rightly celebrated as a landmark civil rights victory. It made legal the marriages that had existed illegally — or in exile, or in secret — for generations. It acknowledged, at the highest level of American jurisprudence, that the right to marry across racial lines was a fundamental right that no state could abrogate.</p>
+      <p>What <em>Loving</em> did not do was address the structural conditions that made mixed-race families vulnerable in ways that extended far beyond the marriage certificate. It did not create legal recognition of mixed-race identity. It did not reform the census classifications that continued to force hybrid individuals into monoracial boxes. It did not address the housing discrimination, employment discrimination, educational discrimination, and social exclusion that mixed-race families continued to face. It removed one weapon from the arsenal of anti-hybrid persecution while leaving the arsenal largely intact.</p>
+
+      <h2>The Present: Documentation, Classification, and Invisibility</h2>
+      <p>Today's legal landscape for mixed-race Americans is one of incomplete recognition and structural invisibility. The 2000 census, for the first time, allowed respondents to select more than one racial category — a reform that the BBBC and its predecessor organizations fought for across decades. But that reform has not been fully implemented across federal agencies, many of which continue to operate under legacy classification systems that do not accommodate hybrid identity.</p>
+      <p>In employment law, the legal protections against racial discrimination have been inconsistently applied to discrimination targeting people specifically because of their mixed-race status — a form of discrimination that is distinct from discrimination against monoracial people and that requires specific legal recognition. The BBBC's 2026 legislative push for the Multiracial Recognition Act is aimed directly at this gap: the distance between the legal acknowledgment that mixed-race people exist and the structural accommodation of that existence in American law.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ESSAY 4: COLORISM & THE INTERNAL WAR
+  ═══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-essay4">
+    <div class="essay-label">Essay IV</div>
+    <h1 class="essay-title">Colorism and the Internal War: How Communities Wound Their Own</h1>
+    <p class="essay-subtitle">On the discrimination mixed-race people face not from white supremacy alone but from within the communities that should be their shelter.</p>
+    <div class="essay-divider"><span>✦</span></div>
+    <div class="byline">
+      <img src="https://picsum.photos/80/80?random=604" alt="">
+      <div>
+        <div class="byline-name">Priya Osei-Williams</div>
+        <div class="byline-meta">Legislative Advocate, New York Chapter · BBBC Senior Fellow</div>
+      </div>
+    </div>
+    <div class="essay-body">
+      <p class="drop-cap">The cruelest injuries are often those inflicted by people who love you. Or who are supposed to. For mixed-race individuals navigating Black and Asian communities simultaneously, the wounds inflicted from within — the accusations of inauthenticity, the colorist hierarchies, the suspicion of divided loyalty — can be as disabling as any discrimination from the outside. And they are far less discussed, because discussing them requires confronting uncomfortable truths about the ways that communities of color have internalized the racial logics of the systems that oppress them.</p>
+
+      <h2>Colorism in the Black Community</h2>
+      <p>Colorism in the Black community — the preference for lighter skin tones and the discrimination against darker ones — is a direct inheritance of slavery. The plantation system assigned different roles to enslaved people based on the proximity of their skin color to whiteness: lighter-skinned enslaved people were more likely to work in the house, to receive limited educational access, to be granted small privileges that created a hierarchy within the enslaved community itself. This was not an accident. It was policy, designed to fracture Black solidarity along the color line and to make the maintenance of racial hierarchy an internal as well as external function.</p>
+      <p>For Black-Asian mixed-race individuals, colorism operates in complex and sometimes contradictory ways. Lighter skin may confer certain social privileges within Black spaces while simultaneously marking the person as suspect — as not fully committed, as ambiguously loyal, as someone whose lighter complexion signals potential inauthenticity. The term "lightskin" carries both aspiration and accusation, depending on who uses it and in what context.</p>
+
+      <div class="pull-quote">
+        <p>"Colorism is white supremacy with the serial numbers filed off. It does the same work of division and hierarchy using the same logic of skin, just operated from the inside."</p>
+        <cite>— Priya Osei-Williams</cite>
+      </div>
+
+      <h2>Ethnic Purity and the Asian Family</h2>
+      <p>Within many Asian communities, the pressure toward ethnic endogamy — marriage within one's ethnic group — is intense and multigenerational. This pressure varies significantly across different Asian ethnic communities, but it is present, in some form, across most of them. It is reinforced by family structure, by cultural memory of colonial disruption, and by the specific ways in which Asian American communities have navigated American racism: through the cultivation of cultural distinctiveness as a form of self-preservation.</p>
+      <p>For Black-Asian mixed-race individuals, this can manifest as explicit rejection. Grandparents who refuse to acknowledge mixed grandchildren. Family gatherings where the hybrid member is made to feel like a guest. Cultural events and traditions from which mixed-heritage people are implicitly excluded. The message, rarely stated directly, is that their existence represents a dilution — a failure of ethnic continuity — rather than an expansion of what the community is and can be.</p>
+      <p>The specific additional burden for Black-Asian individuals is the anti-Blackness that exists within some Asian communities — a prejudice that, again, is partly an inheritance of American racial hierarchy, which positioned proximity to whiteness as the path to social mobility and Blackness as the furthest pole from that aspiration. This anti-Blackness is not universal, and many Asian American communities have worked consciously to confront and dismantle it. But its presence means that the Black-Asian mixed-race person may face not just the generic suspicion of the hybrid, but the specific hostility directed at Blackness, from within their own extended family.</p>
+
+      <h2>The BBBC Position on Internal Discrimination</h2>
+      <p>The Brotherhood of Blended Bloodlines Committee does not approach colorism and internal community discrimination as subjects that are too sensitive to name. We name them because silence serves the wound. We name them because the mixed-race individual who is rejected by the communities that partly constitute them deserves to have that experience acknowledged and analyzed, not euphemized into invisibility.</p>
+      <p>At the same time, the BBBC does not approach these communities as enemies. The Black community and the various Asian American communities are not our adversaries. They are our families. The work of confronting colorism and ethnic exclusionism within those communities is work that many people within those communities are already doing, and doing courageously. Our role is to advocate for the specific interests of hybrid people within that broader project — to insist that the future those communities are building must have room for us, as we are, without subtraction.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ESSAY 5: RECLAIMING IDENTITY
+  ═══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-essay5">
+    <div class="essay-label">Essay V</div>
+    <h1 class="essay-title">Reclaiming the Hybrid: Identity as Resistance</h1>
+    <p class="essay-subtitle">On the radical act of refusing simplification — and the political, cultural, and personal work of building hybrid identity on our own terms.</p>
+    <div class="essay-divider"><span>✦</span></div>
+    <div class="byline">
+      <img src="https://picsum.photos/80/80?random=605" alt="">
+      <div>
+        <div class="byline-name">Joshua A.C. Wyand</div>
+        <div class="byline-meta">Chairman & Founder, BBBC</div>
+      </div>
+    </div>
+    <div class="essay-body">
+      <p class="drop-cap">I want to tell you something that took me forty years to fully believe: there is nothing wrong with you. Not the part that does not fit the census form. Not the part that confuses people at parties. Not the part that gets asked the question. Not the part that carries two histories simultaneously and sometimes does not know how to hold them both at once. There is nothing wrong with any of it. The problem has never been you. The problem is the boxes. And the boxes can be broken.</p>
+
+      <h2>Hybridity as Political Fact</h2>
+      <p>Mixed-race identity is not just a personal reality. It is a political one. Every person of blended heritage who refuses to check a single box, who insists on the full complexity of their identity in a context designed to demand simplification, is performing a political act. Not because they have chosen to be political, but because the system has made their existence a political question. When the government asks you to declare a single racial identity and you say "I won't — I am more than one thing," you are refusing the premise of a system that needs you to be legible in a particular way in order to process you efficiently. That refusal matters.</p>
+      <p>The BBBC was founded on the conviction that this refusal should be organized, resourced, and sustained — that the scattered, individual acts of identity resistance performed by millions of mixed-race Americans every day should be coordinated into a political force capable of changing law, policy, and culture. That is what we are building. And it is working.</p>
+
+      <h2>The Cultural Work of Hybrid Identity</h2>
+      <p>Alongside the political work, there is cultural work. The project of building a positive, self-determined hybrid identity — one that does not define itself primarily by what it is excluded from but by what it is — is ongoing and unfinished. It requires art, literature, music, oral history, and the kinds of community gathering that the Annual Summit represents: spaces where hybrid people can be in the presence of other hybrid people and experience what it feels like to be the norm rather than the exception.</p>
+      <p>For Black-Asian mixed-race individuals specifically, this cultural work involves the recovery of a history that has been largely lost. The stories of the 19th-century families in San Francisco's Chinatown and Fillmore District. The children of soldiers and the women of Korea and Vietnam. The families that were illegal and the families that survived their illegality. These stories exist. They are in archives, in family photographs, in the memories of elders who are still living. They deserve to be told and preserved — not as curiosities, but as the foundation of an identity that is continuous, rooted, and real.</p>
+
+      <div class="pull-quote">
+        <p>"We did not begin as a problem to be solved. We began as love — the specific, defiant love of people who refused to let the law tell them who they could belong to."</p>
+        <cite>— Joshua A.C. Wyand, Chairman</cite>
+      </div>
+
+      <h2>To the Young and Blended</h2>
+      <p>This final section is for the young people. For the teenager who does not know which lunch table to sit at. For the college student who gets the question from the diversity committee. For the child who is the only one who looks like them in every room they enter.</p>
+      <p>You are not a problem. You are not a compromise. You are not half of anything. You are the full product of every person who came before you — all of their cultures, all of their histories, all of their survival and their love. The fact that the world has not yet built adequate categories for you is not your failure. It is the world's incomplete project, and it is one that organizations like the BBBC exist to advance.</p>
+      <p>Your identity is not something that needs to be resolved. It is not a question waiting for an answer. It is an answer — to the centuries of law and custom and violence that tried to prevent you from existing. You exist. You are here. You are exactly what you are. And that is enough. It has always been enough.</p>
+      <p>The Brotherhood of Blended Bloodlines Committee was built for you.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TIMELINE
+  ═══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-timeline">
+    <div class="essay-label">Historical Record</div>
+    <h1 class="essay-title">A Timeline of Hybrid Struggle in America</h1>
+    <p class="essay-subtitle">Key moments in the legal, political, and social history of mixed-race people in the United States.</p>
+    <div class="essay-divider"><span>✦</span></div>
+    <div class="timeline" style="margin-top:36px;">
+      <div class="tl-item">
+        <div class="tl-year">1691</div>
+        <div class="tl-text">Virginia enacts the first colonial antimiscegenation statute, criminalizing marriage between white colonists and Black or Native American people. Penalties include banishment for white women who marry Black men.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1790</div>
+        <div class="tl-text">The Naturalization Act limits citizenship to "free white persons," establishing race as a precondition for belonging in the new republic and setting the framework for the legal exclusion of mixed-race people from full civic standing.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1850s</div>
+        <div class="tl-text">Large-scale Chinese immigration to California for Gold Rush labor brings Black and Asian workers into proximity in mining camps and urban neighborhoods. Informal communities and families begin to form in cities like San Francisco.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1882</div>
+        <div class="tl-text">The Chinese Exclusion Act bans Chinese laborers from entering the United States and bars Chinese immigrants from naturalization. This and subsequent Asian Exclusion Acts effectively criminalize Asian-white and Asian-Black family formation.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1896</div>
+        <div class="tl-text"><em>Plessy v. Ferguson</em> establishes the "separate but equal" doctrine, entrenching racial segregation in law. Homer Plessy himself was mixed-race — seven-eighths white — demonstrating the one-drop rule's reach and the law's indifference to hybrid identity.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1922</div>
+        <div class="tl-text">The Cable Act strips American women of citizenship if they marry men ineligible for citizenship — targeting Asian men specifically. American women who marry Asian men lose their nationality, and their children's citizenship is placed in jeopardy.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1942</div>
+        <div class="tl-text">Executive Order 9066 authorizes the mass internment of Japanese Americans. Over 120,000 people — nearly two-thirds of them American citizens — are imprisoned. Families of mixed Japanese-Black or Japanese-other heritage face unique legal ambiguity about their status.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1948</div>
+        <div class="tl-text">The U.S. military is formally desegregated by Executive Order 9981. Black soldiers begin serving alongside white and Asian soldiers in Korea and Japan, creating conditions for Black-Asian family formation that produces a new generation of mixed-race Americans.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1967</div>
+        <div class="tl-text"><em>Loving v. Virginia</em> strikes down all remaining antimiscegenation laws as unconstitutional. Richard and Mildred Loving — a white man and a Black-Native American woman — become the named plaintiffs in the case that ends the legal prohibition on interracial marriage.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1970s–80s</div>
+        <div class="tl-text">A generation of children born to Black servicemen and Vietnamese, Korean, and Filipino women begin arriving in the United States, many facing rejection from both their birth countries and their fathers' communities. Mixed-race advocacy organizations begin to form in response.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1997</div>
+        <div class="tl-text">After decades of advocacy from multiracial organizations, the Office of Management and Budget revises its racial classification standards to allow individuals to identify with more than one race — paving the way for the 2000 census to include multiracial options for the first time.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2000</div>
+        <div class="tl-text">The U.S. Census Bureau allows respondents to select more than one race for the first time. Nearly 7 million Americans — 2.4% of the population — identify as multiracial. The true number is believed to be significantly higher due to social pressure toward monoracial identification.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2009</div>
+        <div class="tl-text">The Brotherhood of Blended Bloodlines Committee is founded in Detroit, Michigan by Joshua A.C. Wyand and a coalition of multiracial families, civil rights attorneys, and community organizers committed to political advocacy for hybrid and mixed-heritage peoples.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2020</div>
+        <div class="tl-text">The murders of George Floyd and Breonna Taylor and the explosion of anti-Asian hate crimes during the COVID-19 pandemic simultaneously mobilize Black and Asian communities. A national conversation begins — imperfectly, incompletely — about Black-Asian solidarity and the shared enemies of both communities.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2026</div>
+        <div class="tl-text">The BBBC delivers testimony before the Senate Subcommittee on Civil Rights in support of the Multiracial Recognition Act, pressing for formal federal recognition of mixed-heritage identity across all government data collection systems. The struggle continues.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-body -->
+
+<footer>
+  <div class="footer-logo">BBBC · Brotherhood of Blended Bloodlines Committee</div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="news.html">News</a>
+    <a href="donate.html">Donate</a>
+    <a href="members.html">Members</a>
+  </div>
+  <div class="footer-copy">© 2026 BBBC. All rights reserved. Detroit, MI · Est. 2009</div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+function showTab(name, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tnav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.getElementById('tab-nav').offsetTop - 64, behavior:'smooth'});
+}
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const doc=document.documentElement;
+  const scrolled=(doc.scrollTop||document.body.scrollTop);
+  const total=(doc.scrollHeight||document.body.scrollHeight)-doc.clientHeight;
+  document.getElementById('progress-bar').style.width=(scrolled/total*100)+'%';
+});
+
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
