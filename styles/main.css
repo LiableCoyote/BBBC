@@ -81,3 +81,9 @@ nav.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45d
 @media (max-width: 400px) {
   section { padding-top: 40px !important; padding-bottom: 40px !important; }
 }
+
+/* ── iOS auto-zoom prevention ───────────────────────────── */
+/* iOS Safari zooms in when input font-size < 16px; override on mobile */
+@media (max-width: 900px) {
+  input, textarea, select { font-size: 16px !important; }
+}
