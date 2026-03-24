@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Portal — Brotherhood of Blended Bloodlines Committee</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#b80000;--dark:#0f0f0f;--gold:#c9a84c;--dk-gold:#8a6f30;
+  --offwhite:#f5f0e8;--mid:#1e1e1e;--card:#161616;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Open Sans',sans-serif;background:var(--dark);color:var(--offwhite);min-height:100vh;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:2px solid var(--gold);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;line-height:1.2;text-decoration:none;}
+.nav-logo span{color:#fff;font-weight:400;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{color:rgba(245,240,232,0.7);text-decoration:none;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+
+/* PAGE HEADER */
+.page-header{margin-top:64px;position:relative;height:240px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
+.ph-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.25);}
+.ph-content{position:relative;z-index:2;}
+.ph-tag{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.ph-tag::before,.ph-tag::after{content:'';width:28px;height:1px;background:var(--gold);display:block;}
+.ph-title{font-family:'Oswald',sans-serif;font-size:44px;font-weight:700;text-transform:uppercase;}
+.ph-title span{color:var(--gold);}
+
+/* SHARED */
+.section-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.section-title{font-family:'Oswald',sans-serif;font-size:30px;font-weight:700;text-transform:uppercase;margin-bottom:14px;}
+.section-title span{color:var(--gold);}
+.divider{width:44px;height:3px;background:var(--red);margin-bottom:22px;}
+p{line-height:1.8;color:rgba(245,240,232,0.72);font-size:14px;}
+.btn{display:inline-block;padding:11px 24px;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;text-decoration:none;}
+.btn-primary{background:var(--red);color:#fff;}
+.btn-primary:hover{background:#d00000;}
+.btn-gold{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.btn-gold:hover{background:var(--gold);color:var(--dark);}
+.btn-sm{padding:7px 16px;font-size:11px;}
+
+/* ═══════════════════════════════════════
+   LOGIN VIEW
+═══════════════════════════════════════ */
+.login-body{padding:60px 60px 0;max-width:1060px;margin:0 auto;}
+.login-split{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;}
+
+.login-form-wrap{background:var(--card);border:1px solid rgba(201,168,76,0.18);padding:34px 30px;}
+.login-form-wrap h2{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:6px;}
+.login-form-wrap .sub{font-size:12px;color:rgba(245,240,232,0.4);margin-bottom:24px;font-style:italic;}
+.lf{display:flex;flex-direction:column;gap:11px;}
+.lf input{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.18);color:var(--offwhite);padding:11px 14px;font-family:'Open Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;width:100%;}
+.lf input:focus{border-color:var(--gold);}
+.lf input::placeholder{color:rgba(245,240,232,0.28);}
+.lf-forgot{font-size:11px;color:rgba(201,168,76,0.5);text-align:right;cursor:pointer;transition:color .2s;}
+.lf-forgot:hover{color:var(--gold);}
+.lf-err{font-size:12px;color:#ff6666;text-align:center;min-height:16px;}
+.lf-demo{margin-top:12px;padding:10px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.14);font-size:11px;color:rgba(245,240,232,0.4);text-align:center;line-height:1.6;}
+.lf-demo b{color:rgba(201,168,76,0.65);}
+.lf-divider{display:flex;align-items:center;gap:10px;margin:4px 0;}
+.lf-divider::before,.lf-divider::after{content:'';flex:1;height:1px;background:rgba(201,168,76,0.12);}
+.lf-divider span{font-size:10px;color:rgba(245,240,232,0.25);text-transform:uppercase;letter-spacing:1px;}
+
+.login-benefits{padding-top:8px;}
+.login-benefits h3{font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:18px;}
+.benefit-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.benefit-list li{display:flex;gap:13px;align-items:flex-start;}
+.ben-icon{width:34px;height:34px;background:rgba(184,0,0,0.12);border:1px solid rgba(184,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.ben-txt strong{display:block;font-size:13px;color:#fff;margin-bottom:2px;}
+.ben-txt span{font-size:11px;color:rgba(245,240,232,0.45);line-height:1.5;}
+.signup-cta{background:rgba(184,0,0,0.08);border:1px solid rgba(184,0,0,0.25);padding:18px;text-align:center;}
+.signup-cta p{font-size:13px;margin-bottom:12px;}
+
+/* TIERS */
+#tiers{padding:70px 60px;max-width:1060px;margin:0 auto;}
+.tiers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px;}
+.tier-card{background:var(--card);border:1px solid rgba(201,168,76,0.12);padding:24px 18px;display:flex;flex-direction:column;gap:0;transition:border-color .2s;position:relative;}
+.tier-card:hover{border-color:rgba(201,168,76,0.35);}
+.tier-card.featured{border-color:var(--gold);}
+.tier-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--dark);font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;white-space:nowrap;}
+.tier-name{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;color:var(--gold);margin-bottom:4px;margin-top:10px;}
+.tier-price{font-family:'Oswald',sans-serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:2px;}
+.tier-price span{font-size:13px;color:rgba(245,240,232,0.4);font-weight:400;}
+.tier-desc{font-size:11px;color:rgba(245,240,232,0.45);margin-bottom:16px;line-height:1.5;}
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;flex:1;}
+.tier-features li{font-size:11px;color:rgba(245,240,232,0.6);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+.tier-features li.on::before{content:'✓';color:var(--gold);font-size:12px;flex-shrink:0;}
+.tier-features li.off{opacity:.35;}
+.tier-features li.off::before{content:'✗';color:#666;font-size:12px;flex-shrink:0;}
+
+/* DIR TEASER */
+#dir-teaser{padding:0 60px 70px;max-width:1060px;margin:0 auto;}
+.teaser-wrap{position:relative;overflow:hidden;border:1px solid rgba(201,168,76,0.12);}
+.teaser-blur{filter:blur(4px) brightness(0.5);pointer-events:none;user-select:none;}
+.teaser-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+.teaser-lock .lock-icon{font-size:36px;}
+.teaser-lock p{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:1px;color:var(--gold);}
+
+/* ═══════════════════════════════════════
+   DASHBOARD VIEW
+═══════════════════════════════════════ */
+#dashboard-view{display:none;padding-top:64px;}
+.dash-topbar{background:#0a0a0a;border-bottom:1px solid rgba(201,168,76,0.15);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;}
+.dash-welcome{font-family:'Oswald',sans-serif;font-size:13px;color:rgba(245,240,232,0.5);letter-spacing:.5px;}
+.dash-welcome strong{color:var(--gold);font-size:16px;display:block;}
+.dash-actions{display:flex;align-items:center;gap:16px;}
+.dash-tier-badge{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--gold);color:var(--gold);}
+.logout-btn{background:transparent;border:1px solid rgba(200,80,80,0.35);color:rgba(200,80,80,0.6);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.logout-btn:hover{border-color:#cc4444;color:#cc4444;}
+
+.dash-stats-bar{display:grid;grid-template-columns:repeat(5,1fr);background:var(--mid);border-bottom:1px solid rgba(201,168,76,0.1);}
+.dash-stat{padding:16px 20px;border-right:1px solid rgba(201,168,76,0.08);}
+.dash-stat:last-child{border-right:none;}
+.ds-label{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-bottom:4px;}
+.ds-val{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#fff;}
+.ds-val.green{color:#88cc66;}
+.ds-val.red{color:#cc5555;}
+.ds-val.gold{color:var(--gold);}
+
+.dash-body{display:flex;min-height:calc(100vh - 64px - 60px - 70px);}
+.dash-sidebar{width:200px;min-width:200px;background:#0a0a0a;border-right:1px solid rgba(201,168,76,0.1);padding:24px 0;flex-shrink:0;}
+.dash-nav-item{display:flex;align-items:center;gap:10px;padding:11px 22px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:rgba(245,240,232,0.4);transition:all .18s;border-left:3px solid transparent;}
+.dash-nav-item:hover{color:rgba(245,240,232,0.75);background:rgba(201,168,76,0.04);}
+.dash-nav-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,0.07);}
+.dash-nav-item .dni{font-size:16px;width:20px;text-align:center;}
+.dash-main{flex:1;padding:36px 40px;overflow-y:auto;}
+.dash-tab{display:none;}
+.dash-tab.active{display:block;}
+
+/* OVERVIEW TAB */
+.overview-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;margin-top:6px;}
+.ov-card{background:var(--card);border:1px solid rgba(201,168,76,0.1);padding:22px;}
+.ov-card h3{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;color:var(--gold);letter-spacing:1px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(201,168,76,0.1);}
+.activity-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.act-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.06);align-items:flex-start;}
+.act-item:last-child{border-bottom:none;}
+.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.act-txt{font-size:12px;color:rgba(245,240,232,0.65);line-height:1.5;}
+.act-txt strong{color:rgba(245,240,232,0.9);}
+.act-date{font-size:10px;color:rgba(245,240,232,0.25);margin-top:2px;}
+.quick-links{display:flex;flex-direction:column;gap:8px;}
+.ql-btn{padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.12);color:rgba(245,240,232,0.6);font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:left;transition:all .18s;display:flex;align-items:center;gap:10px;}
+.ql-btn:hover{border-color:rgba(201,168,76,0.35);color:var(--gold);}
+
+/* DIRECTORY TAB */
+.dir-controls{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.dir-search{flex:1;min-width:200px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.18);color:var(--offwhite);padding:9px 14px;font-family:'Open Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.dir-search:focus{border-color:var(--gold);}
+.dir-search::placeholder{color:rgba(245,240,232,0.25);}
+.dir-filter{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.18);color:rgba(245,240,232,0.7);padding:9px 12px;font-family:'Open Sans',sans-serif;font-size:12px;outline:none;cursor:pointer;}
+.dir-filter option{background:var(--dark);}
+#member-count{font-size:11px;color:rgba(245,240,232,0.3);align-self:center;white-space:nowrap;letter-spacing:.5px;}
+.member-table{width:100%;border-collapse:collapse;}
+.member-table th{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.55);padding:8px 12px;border-bottom:1px solid rgba(201,168,76,0.12);text-align:left;}
+.member-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;color:rgba(245,240,232,0.7);vertical-align:middle;}
+.member-table tr:hover td{background:rgba(201,168,76,0.03);}
+.member-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(201,168,76,0.2);}
+.member-name-cell{display:flex;align-items:center;gap:10px;}
+.tier-pill{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border:1px solid;display:inline-block;}
+.tier-ally{border-color:rgba(100,150,255,0.4);color:rgba(100,150,255,0.8);}
+.tier-advocate{border-color:rgba(100,200,100,0.4);color:rgba(100,200,100,0.8);}
+.tier-guardian{border-color:rgba(201,168,76,0.5);color:var(--gold);}
+.tier-vanguard{border-color:rgba(184,0,0,0.6);color:#ee5555;}
+
+/* EVENTS TAB */
+.events-list{display:flex;flex-direction:column;gap:16px;}
+.event-card{background:var(--card);border:1px solid rgba(201,168,76,0.1);padding:20px 22px;display:grid;grid-template-columns:80px 1fr auto;gap:20px;align-items:center;transition:border-color .2s;}
+.event-card:hover{border-color:rgba(201,168,76,0.3);}
+.event-date-box{background:rgba(184,0,0,0.15);border:1px solid rgba(184,0,0,0.3);text-align:center;padding:10px 6px;}
+.edb-month{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,80,80,0.8);}
+.edb-day{font-family:'Oswald',sans-serif;font-size:30px;font-weight:700;color:#fff;line-height:1;}
+.edb-year{font-size:10px;color:rgba(245,240,232,0.25);}
+.event-info h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;}
+.event-info .emeta{font-size:11px;color:rgba(245,240,232,0.4);display:flex;gap:16px;flex-wrap:wrap;}
+.event-info .emeta span::before{margin-right:5px;}
+.event-tag{display:inline-block;font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(201,168,76,0.3);color:rgba(201,168,76,0.6);margin-bottom:6px;}
+.rsvp-col{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+.rsvp-btn{padding:7px 16px;background:transparent;border:1px solid rgba(201,168,76,0.35);color:rgba(201,168,76,0.65);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.rsvp-btn:hover,.rsvp-btn.going{background:rgba(201,168,76,0.12);border-color:var(--gold);color:var(--gold);}
+.rsvp-btn.going{cursor:default;}
+.rsvp-cnt{font-size:10px;color:rgba(245,240,232,0.25);}
+
+/* PROFILE TAB */
+.profile-grid{display:grid;grid-template-columns:220px 1fr;gap:30px;align-items:start;}
+.profile-avatar-box{background:var(--card);border:1px solid rgba(201,168,76,0.1);padding:24px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;}
+.profile-avatar-box img{width:100px;height:100px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);}
+.prof-name{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#fff;}
+.prof-id{font-size:10px;color:rgba(245,240,232,0.28);letter-spacing:1px;}
+.prof-form{background:var(--card);border:1px solid rgba(201,168,76,0.1);padding:26px;}
+.prof-form h3{font-family:'Oswald',sans-serif;font-size:14px;text-transform:uppercase;color:var(--gold);letter-spacing:1px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid rgba(201,168,76,0.1);}
+.prof-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.field-wrap{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.55);}
+.prof-form input,.prof-form select,.prof-form textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);color:var(--offwhite);padding:9px 12px;font-family:'Open Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;width:100%;}
+.prof-form input:focus,.prof-form select:focus,.prof-form textarea:focus{border-color:var(--gold);}
+.prof-form select option{background:var(--dark);}
+.prof-form textarea{height:80px;resize:vertical;}
+.prof-save-row{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;}
+
+/* DUES TAB */
+.dues-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.dues-status-card{background:var(--card);border:1px solid rgba(201,168,76,0.1);padding:24px;}
+.dues-status-card h3{font-family:'Oswald',sans-serif;font-size:14px;text-transform:uppercase;color:var(--gold);letter-spacing:1px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(201,168,76,0.1);}
+.dues-amount{font-family:'Oswald',sans-serif;font-size:42px;font-weight:700;color:#fff;margin-bottom:4px;}
+.dues-amount span{font-size:14px;color:rgba(245,240,232,0.4);}
+.dues-meta{font-size:12px;color:rgba(245,240,232,0.45);margin-bottom:18px;line-height:1.7;}
+.dues-status-pill{display:inline-block;padding:4px 12px;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+.dues-paid{background:rgba(80,180,80,0.12);border:1px solid rgba(80,180,80,0.35);color:#88cc66;}
+.dues-due{background:rgba(184,0,0,0.12);border:1px solid rgba(184,0,0,0.35);color:#cc5555;}
+.pay-form{display:flex;flex-direction:column;gap:10px;}
+.pay-form input{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);color:var(--offwhite);padding:9px 12px;font-family:'Open Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.pay-form input:focus{border-color:var(--gold);}
+.pay-form input::placeholder{color:rgba(245,240,232,0.25);}
+.pay-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;}
+.history-table{width:100%;border-collapse:collapse;margin-top:6px;}
+.history-table th{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.45);padding:7px 0;border-bottom:1px solid rgba(201,168,76,0.1);text-align:left;}
+.history-table td{padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;color:rgba(245,240,232,0.6);}
+.hist-status{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;}
+.hist-ok{color:#88cc66;}
+.hist-pend{color:var(--gold);}
+
+/* TOAST */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1200;border:1px solid var(--dk-gold);color:var(--gold);font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1px;padding:10px 22px;z-index:9999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:'Oswald',sans-serif;font-size:13px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;}
+.footer-copy{font-size:11px;color:rgba(245,240,232,0.22);}
+.footer-links{display:flex;gap:18px;}
+.footer-links a{font-size:11px;color:rgba(245,240,232,0.32);text-decoration:none;letter-spacing:.5px;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .login-body{padding:40px 20px 0;}
+  .login-split{grid-template-columns:1fr;}
+  .tiers-grid{grid-template-columns:1fr 1fr;}
+  #tiers,#dir-teaser{padding:50px 20px;}
+  .dash-body{flex-direction:column;}
+  .dash-sidebar{width:100%;min-width:unset;display:flex;overflow-x:auto;padding:0;}
+  .dash-nav-item{white-space:nowrap;}
+  .dash-main{padding:24px 20px;}
+  .overview-grid,.dues-grid,.profile-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 52" width="32" height="38" style="flex-shrink:0">
+      <path d="M22 2 L41 9 L41 27 Q41 43 22 50 Q3 43 3 27 L3 9 Z" fill="#0d0805" stroke="#c9a84c" stroke-width="1.8"/>
+      <path d="M22 6 L37 12 L37 27 Q37 40 22 46 Q7 40 7 27 L7 12 Z" fill="none" stroke="rgba(201,168,76,0.22)" stroke-width="0.8"/>
+      <path d="M12 12 Q32 18.5 12 25 Q32 31.5 22 43" fill="none" stroke="#c9a84c" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M32 12 Q12 18.5 32 25 Q12 31.5 22 43" fill="none" stroke="#b80000" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="22" cy="18.5" r="2.3" fill="#fff" opacity="0.9"/>
+      <circle cx="22" cy="30" r="2.3" fill="#fff" opacity="0.9"/>
+      <polygon points="22,0 25,4 22,8 19,4" fill="#c9a84c"/>
+    </svg>
+    <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#wing">Defense Corps</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="donate.html">Donate</a></li>
+    <li><a href="members.html" class="active">Members</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     LOGIN VIEW
+══════════════════════════════════════════ -->
+<div id="login-view">
+  <div class="page-header">
+    <img class="ph-img" src="https://picsum.photos/1400/300?random=71" alt="">
+    <div class="ph-content">
+      <div class="ph-tag">Restricted Access</div>
+      <h1 class="ph-title">Member <span>Portal</span></h1>
+    </div>
+  </div>
+
+  <div class="login-body">
+    <div class="login-split">
+      <!-- Login Form -->
+      <div class="login-form-wrap">
+        <h2>Sign In</h2>
+        <p class="sub">Access your member dashboard, directory, and benefits.</p>
+        <form class="lf" onsubmit="handleLogin(event)">
+          <input type="email" id="login-email" placeholder="Email Address" required>
+          <input type="password" id="login-pass" placeholder="Password" required>
+          <div class="lf-forgot" onclick="toast('Password reset link sent.')">Forgot password?</div>
+          <div class="lf-err" id="login-err"></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;">Sign In</button>
+          <div class="lf-divider"><span>or</span></div>
+          <button type="button" class="btn btn-gold" style="width:100%;" onclick="joinNow()">Apply for Membership</button>
+        </form>
+        <div class="lf-demo">
+          <b>Demo access:</b> enter any email & password<br>to explore the member portal
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="login-benefits">
+        <h3>Member Benefits</h3>
+        <ul class="benefit-list">
+          <li>
+            <div class="ben-icon">📋</div>
+            <div class="ben-txt"><strong>Full Member Directory</strong><span>Search and connect with BBBC members across all 14 chapters nationwide.</span></div>
+          </li>
+          <li>
+            <div class="ben-icon">📅</div>
+            <div class="ben-txt"><strong>Events & RSVP</strong><span>Access exclusive events, chapter meetings, training cycles, and the annual summit.</span></div>
+          </li>
+          <li>
+            <div class="ben-icon">🛡</div>
+            <div class="ben-txt"><strong>Defense Corps Access</strong><span>Guardian tier and above unlock Defense Corps enrollment and training schedules.</span></div>
+          </li>
+          <li>
+            <div class="ben-icon">⚖</div>
+            <div class="ben-txt"><strong>Legal Aid Priority</strong><span>Members receive priority access to our legal aid hotline and anti-discrimination resources.</span></div>
+          </li>
+          <li>
+            <div class="ben-icon">🗳</div>
+            <div class="ben-txt"><strong>Voting Rights</strong><span>Advocate tier and above may vote on BBBC resolutions, leadership elections, and chapter initiatives.</span></div>
+          </li>
+        </ul>
+        <div class="signup-cta">
+          <p>Not a member yet? Join thousands of blended community advocates.</p>
+          <button class="btn btn-primary btn-sm" onclick="joinNow()">Apply for Membership →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMBERSHIP TIERS -->
+  <section id="tiers">
+    <div class="section-label">Join the Brotherhood</div>
+    <h2 class="section-title">Membership <span>Tiers</span></h2>
+    <div class="divider"></div>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-name">Ally</div>
+        <div class="tier-price">$10<span>/mo</span></div>
+        <div class="tier-desc">For supporters who believe in the cause and want to contribute.</div>
+        <ul class="tier-features">
+          <li class="on">Member newsletter</li>
+          <li class="on">Community forum access</li>
+          <li class="on">Digital membership card</li>
+          <li class="off">Directory access</li>
+          <li class="off">Voting rights</li>
+          <li class="off">Defense Corps access</li>
+          <li class="off">Legal aid priority</li>
+        </ul>
+        <button class="btn btn-gold btn-sm" style="width:100%" onclick="joinNow()">Join as Ally</button>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Advocate</div>
+        <div class="tier-price">$25<span>/mo</span></div>
+        <div class="tier-desc">Active members engaged in advocacy and community building.</div>
+        <ul class="tier-features">
+          <li class="on">Everything in Ally</li>
+          <li class="on">Full directory access</li>
+          <li class="on">Event access & RSVP</li>
+          <li class="on">Chapter voting rights</li>
+          <li class="off">Defense Corps access</li>
+          <li class="off">Legal aid priority</li>
+          <li class="off">Leadership eligibility</li>
+        </ul>
+        <button class="btn btn-gold btn-sm" style="width:100%" onclick="joinNow()">Join as Advocate</button>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-name">Guardian</div>
+        <div class="tier-price">$50<span>/mo</span></div>
+        <div class="tier-desc">Full members with access to all programs and the Defense Corps.</div>
+        <ul class="tier-features">
+          <li class="on">Everything in Advocate</li>
+          <li class="on">Defense Corps enrollment</li>
+          <li class="on">Legal aid priority access</li>
+          <li class="on">National voting rights</li>
+          <li class="on">Annual summit discount</li>
+          <li class="off">Leadership eligibility</li>
+          <li class="off">Corps command track</li>
+        </ul>
+        <button class="btn btn-primary btn-sm" style="width:100%" onclick="joinNow()">Join as Guardian</button>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Vanguard</div>
+        <div class="tier-price">$100<span>/mo</span></div>
+        <div class="tier-desc">Our highest tier for leaders, commanders, and major contributors.</div>
+        <ul class="tier-features">
+          <li class="on">Everything in Guardian</li>
+          <li class="on">Leadership eligibility</li>
+          <li class="on">Corps command track</li>
+          <li class="on">Direct council access</li>
+          <li class="on">Free annual summit</li>
+          <li class="on">Quarterly briefings</li>
+          <li class="on">Priority legal counsel</li>
+        </ul>
+        <button class="btn btn-gold btn-sm" style="width:100%" onclick="joinNow()">Join as Vanguard</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECTORY TEASER -->
+  <div id="dir-teaser" style="padding-bottom:70px;">
+    <div class="section-label">Member Network</div>
+    <h2 class="section-title" style="margin-bottom:10px;">Member <span>Directory</span></h2>
+    <div class="divider"></div>
+    <div class="teaser-wrap">
+      <div class="teaser-blur">
+        <table class="member-table" style="width:100%;background:var(--card);padding:16px;">
+          <thead><tr><th>Member</th><th>Chapter</th><th>Role</th><th>Tier</th><th>Joined</th></tr></thead>
+          <tbody id="teaser-rows"></tbody>
+        </table>
+      </div>
+      <div class="teaser-lock">
+        <div class="lock-icon">🔒</div>
+        <p>Sign in to access the full member directory</p>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('login-email').focus()">Sign In to View</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DASHBOARD VIEW
+══════════════════════════════════════════ -->
+<div id="dashboard-view">
+  <!-- Top bar -->
+  <div class="dash-topbar">
+    <div class="dash-welcome">Welcome back,<strong id="dash-name">—</strong></div>
+    <div class="dash-actions">
+      <div class="dash-tier-badge" id="dash-tier-badge">Guardian</div>
+      <button class="logout-btn" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="dash-stats-bar">
+    <div class="dash-stat"><div class="ds-label">Member Since</div><div class="ds-val gold" id="ds-since">—</div></div>
+    <div class="dash-stat"><div class="ds-label">Chapter</div><div class="ds-val" id="ds-chapter">—</div></div>
+    <div class="dash-stat"><div class="ds-label">Tier</div><div class="ds-val gold" id="ds-tier">—</div></div>
+    <div class="dash-stat"><div class="ds-label">Dues Status</div><div class="ds-val green" id="ds-dues">Paid</div></div>
+    <div class="dash-stat"><div class="ds-label">Member ID</div><div class="ds-val" id="ds-id" style="font-size:12px;letter-spacing:1px;">—</div></div>
+  </div>
+
+  <!-- Body -->
+  <div class="dash-body">
+    <!-- Sidebar nav -->
+    <div class="dash-sidebar">
+      <div class="dash-nav-item active" onclick="showTab('overview',this)"><span class="dni">⊞</span>Overview</div>
+      <div class="dash-nav-item" onclick="showTab('directory',this)"><span class="dni">👥</span>Directory</div>
+      <div class="dash-nav-item" onclick="showTab('events',this)"><span class="dni">📅</span>Events</div>
+      <div class="dash-nav-item" onclick="showTab('profile',this)"><span class="dni">👤</span>My Profile</div>
+      <div class="dash-nav-item" onclick="showTab('dues',this)"><span class="dni">💳</span>Dues</div>
+    </div>
+
+    <!-- Main content -->
+    <div class="dash-main">
+
+      <!-- OVERVIEW -->
+      <div class="dash-tab active" id="tab-overview">
+        <div class="section-label">Dashboard</div>
+        <h2 class="section-title" style="font-size:24px;margin-bottom:6px;">Overview</h2>
+        <div class="divider" style="margin-bottom:18px;"></div>
+        <div class="overview-grid">
+          <div class="ov-card">
+            <h3>Recent Activity</h3>
+            <ul class="activity-list" id="activity-list"></ul>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="ov-card">
+              <h3>Quick Actions</h3>
+              <div class="quick-links">
+                <button class="ql-btn" onclick="showTab('directory',document.querySelectorAll('.dash-nav-item')[1])">👥 &nbsp;Browse Directory</button>
+                <button class="ql-btn" onclick="showTab('events',document.querySelectorAll('.dash-nav-item')[2])">📅 &nbsp;View Events</button>
+                <button class="ql-btn" onclick="showTab('dues',document.querySelectorAll('.dash-nav-item')[4])">💳 &nbsp;Pay Dues</button>
+                <button class="ql-btn" onclick="window.location.href='donate.html'">❤ &nbsp;Make a Donation</button>
+                <button class="ql-btn" onclick="window.location.href='index.html#contact'">✉ &nbsp;Contact Council</button>
+              </div>
+            </div>
+            <div class="ov-card">
+              <h3>Next Event</h3>
+              <div id="next-event-preview"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIRECTORY -->
+      <div class="dash-tab" id="tab-directory">
+        <div class="section-label">Network</div>
+        <h2 class="section-title" style="font-size:24px;margin-bottom:6px;">Member Directory</h2>
+        <div class="divider" style="margin-bottom:18px;"></div>
+        <div class="dir-controls">
+          <input class="dir-search" id="dir-search" type="text" placeholder="Search by name, chapter, or role…" oninput="filterDir()">
+          <select class="dir-filter" id="filter-chapter" onchange="filterDir()">
+            <option value="">All Chapters</option>
+            <option>Detroit HQ</option><option>Atlanta</option><option>Chicago</option>
+            <option>Los Angeles</option><option>New York</option><option>Houston</option>
+            <option>Miami</option><option>Seattle</option>
+          </select>
+          <select class="dir-filter" id="filter-tier" onchange="filterDir()">
+            <option value="">All Tiers</option>
+            <option>Ally</option><option>Advocate</option><option>Guardian</option><option>Vanguard</option>
+          </select>
+          <span id="member-count"></span>
+        </div>
+        <table class="member-table">
+          <thead><tr><th>Member</th><th>Chapter</th><th>Role</th><th>Tier</th><th>Joined</th></tr></thead>
+          <tbody id="dir-body"></tbody>
+        </table>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="dash-tab" id="tab-events">
+        <div class="section-label">Calendar</div>
+        <h2 class="section-title" style="font-size:24px;margin-bottom:6px;">Upcoming Events</h2>
+        <div class="divider" style="margin-bottom:18px;"></div>
+        <div class="events-list" id="events-list"></div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="dash-tab" id="tab-profile">
+        <div class="section-label">Account</div>
+        <h2 class="section-title" style="font-size:24px;margin-bottom:6px;">My Profile</h2>
+        <div class="divider" style="margin-bottom:18px;"></div>
+        <div class="profile-grid">
+          <div class="profile-avatar-box">
+            <img id="prof-avatar" src="https://picsum.photos/200/200?random=99" alt="Avatar">
+            <div class="prof-name" id="prof-disp-name">—</div>
+            <div class="prof-id" id="prof-disp-id">—</div>
+            <div class="tier-pill tier-guardian" id="prof-tier-pill">Guardian</div>
+            <button class="btn btn-gold btn-sm" onclick="toast('Photo upload coming soon.')">Change Photo</button>
+          </div>
+          <div class="prof-form">
+            <h3>Personal Information</h3>
+            <div class="prof-form-grid">
+              <div class="field-wrap"><div class="field-label">First Name</div><input id="pf-first" type="text"></div>
+              <div class="field-wrap"><div class="field-label">Last Name</div><input id="pf-last" type="text"></div>
+            </div>
+            <div class="prof-form-grid">
+              <div class="field-wrap"><div class="field-label">Email</div><input id="pf-email" type="email"></div>
+              <div class="field-wrap"><div class="field-label">Phone</div><input id="pf-phone" type="tel" placeholder="(555) 000-0000"></div>
+            </div>
+            <div class="prof-form-grid">
+              <div class="field-wrap">
+                <div class="field-label">Chapter</div>
+                <select id="pf-chapter">
+                  <option>Detroit HQ</option><option>Atlanta</option><option>Chicago</option>
+                  <option>Los Angeles</option><option>New York</option><option>Houston</option>
+                  <option>Miami</option><option>Seattle</option>
+                </select>
+              </div>
+              <div class="field-wrap">
+                <div class="field-label">Role / Title</div>
+                <input id="pf-role" type="text" placeholder="e.g. Advocate, Marshal...">
+              </div>
+            </div>
+            <div class="field-wrap">
+              <div class="field-label">Bio</div>
+              <textarea id="pf-bio" placeholder="Tell the community about yourself…"></textarea>
+            </div>
+            <div class="prof-save-row">
+              <button class="btn btn-gold btn-sm" onclick="toast('Changes discarded.')">Cancel</button>
+              <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUES -->
+      <div class="dash-tab" id="tab-dues">
+        <div class="section-label">Billing</div>
+        <h2 class="section-title" style="font-size:24px;margin-bottom:6px;">Dues & Payments</h2>
+        <div class="divider" style="margin-bottom:18px;"></div>
+        <div class="dues-grid">
+          <div class="dues-status-card">
+            <h3>Current Status</h3>
+            <div class="dues-status-pill dues-paid" id="dues-pill">✓ Dues Paid</div>
+            <div class="dues-amount">$50<span>/mo</span></div>
+            <div class="dues-meta" id="dues-meta">Guardian Tier · Next billing: April 1, 2026<br>Card on file: Visa •••• 4821</div>
+            <h3 style="margin-top:18px;">Pay / Update Card</h3>
+            <div class="pay-form" style="margin-top:12px;">
+              <input type="text" placeholder="Cardholder Name">
+              <input type="text" placeholder="Card Number" maxlength="19">
+              <div class="pay-row">
+                <input type="text" placeholder="MM / YY" maxlength="7">
+                <input type="text" placeholder="CVV" maxlength="4">
+                <input type="text" placeholder="ZIP" maxlength="10">
+              </div>
+              <button class="btn btn-primary" onclick="toast('Payment method updated.')">Update Card</button>
+            </div>
+          </div>
+          <div class="dues-status-card">
+            <h3>Payment History</h3>
+            <table class="history-table">
+              <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+              <tbody id="dues-history"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dash-main -->
+  </div><!-- /dash-body -->
+</div><!-- /dashboard-view -->
+
+<footer>
+  <div class="footer-logo">BBBC · Brotherhood of Blended Bloodlines Committee</div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+    <a href="donate.html">Donate</a><a href="members.html">Member Portal</a>
+  </div>
+  <div class="footer-copy">© 2026 BBBC. All rights reserved. Detroit, MI · Est. 2009</div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+// ══ DATA ══════════════════════════════════════════════════
+const MEMBERS=[
+  {id:'MBR-A1B2C3',name:'Terrence Okafor-Walsh',chapter:'Detroit HQ',role:'Chapter Marshal',tier:'Vanguard',joined:'Jan 2021',avatar:'https://picsum.photos/80/80?random=101'},
+  {id:'MBR-D4E5F6',name:'Mei-Ling Castillo',chapter:'Los Angeles',role:'Advocate',tier:'Guardian',joined:'Mar 2022',avatar:'https://picsum.photos/80/80?random=102'},
+  {id:'MBR-G7H8I9',name:'Darius St. Claire',chapter:'Atlanta',role:'Defense Corps Recruit',tier:'Guardian',joined:'Jun 2022',avatar:'https://picsum.photos/80/80?random=103'},
+  {id:'MBR-J1K2L3',name:'Sofia Nguyen-Brooks',chapter:'New York',role:'Legal Liaison',tier:'Vanguard',joined:'Aug 2020',avatar:'https://picsum.photos/80/80?random=104'},
+  {id:'MBR-M4N5O6',name:'Khalil Fernandez',chapter:'Houston',role:'General Member',tier:'Advocate',joined:'Nov 2022',avatar:'https://picsum.photos/80/80?random=105'},
+  {id:'MBR-P7Q8R9',name:'Amara Johansson-Bell',chapter:'Chicago',role:'Youth Program Lead',tier:'Guardian',joined:'Feb 2021',avatar:'https://picsum.photos/80/80?random=106'},
+  {id:'MBR-S1T2U3',name:'Remy Dubois-Washington',chapter:'Miami',role:'General Member',tier:'Ally',joined:'Jan 2024',avatar:'https://picsum.photos/80/80?random=107'},
+  {id:'MBR-V4W5X6',name:'Nia Petrov-Jackson',chapter:'Seattle',role:'Outreach Coordinator',tier:'Advocate',joined:'Sep 2022',avatar:'https://picsum.photos/80/80?random=108'},
+  {id:'MBR-Y7Z8A1',name:'Marcus Obi-Chen',chapter:'Detroit HQ',role:'Defense Corps Sergeant',tier:'Vanguard',joined:'Mar 2020',avatar:'https://picsum.photos/80/80?random=109'},
+  {id:'MBR-B2C3D4',name:'Lena Morales-Kim',chapter:'Los Angeles',role:'General Member',tier:'Advocate',joined:'Jul 2023',avatar:'https://picsum.photos/80/80?random=110'},
+  {id:'MBR-E5F6G7',name:'Devon Achebe-Taylor',chapter:'Atlanta',role:'Chapter Secretary',tier:'Guardian',joined:'Apr 2021',avatar:'https://picsum.photos/80/80?random=111'},
+  {id:'MBR-H8I9J1',name:'Priya Osei-Williams',chapter:'New York',role:'Legislative Advocate',tier:'Vanguard',joined:'Dec 2019',avatar:'https://picsum.photos/80/80?random=112'},
+  {id:'MBR-K2L3M4',name:'Elijah Nakamura-Brown',chapter:'Chicago',role:'General Member',tier:'Ally',joined:'Feb 2024',avatar:'https://picsum.photos/80/80?random=113'},
+  {id:'MBR-N5O6P7',name:'Yasmin Torres-Adeyemi',chapter:'Houston',role:'Defense Corps Recruit',tier:'Guardian',joined:'Oct 2022',avatar:'https://picsum.photos/80/80?random=114'},
+  {id:'MBR-Q8R9S1',name:'Caden O\'Brien-Diallo',chapter:'Miami',role:'General Member',tier:'Advocate',joined:'May 2023',avatar:'https://picsum.photos/80/80?random=115'},
+  {id:'MBR-T2U3V4',name:'Zara Singh-Morrison',chapter:'Seattle',role:'Media Director',tier:'Guardian',joined:'Aug 2021',avatar:'https://picsum.photos/80/80?random=116'},
+  {id:'MBR-W5X6Y7',name:'Isaiah Kowalski-Mensah',chapter:'Detroit HQ',role:'Treasurer',tier:'Vanguard',joined:'Jun 2020',avatar:'https://picsum.photos/80/80?random=117'},
+  {id:'MBR-Z8A1B2',name:'Camille Reyes-Park',chapter:'Atlanta',role:'General Member',tier:'Ally',joined:'Mar 2024',avatar:'https://picsum.photos/80/80?random=118'},
+  {id:'MBR-C3D4E5',name:'Tobias Nwosu-Fleming',chapter:'Los Angeles',role:'Corps Marshal',tier:'Vanguard',joined:'Jan 2020',avatar:'https://picsum.photos/80/80?random=119'},
+  {id:'MBR-F6G7H8',name:'Aaliyah Vasquez-Chen',chapter:'New York',role:'Community Organizer',tier:'Guardian',joined:'Nov 2021',avatar:'https://picsum.photos/80/80?random=120'},
+];
+
+const EVENTS=[
+  {month:'MAR',day:28,year:2026,title:'Detroit Chapter Monthly Meeting',type:'Chapter Meeting',loc:'BBBC HQ — 1847 Unity Blvd, Detroit',time:'7:00 PM EST',attending:34,tag:'Members Only'},
+  {month:'APR',day:5,year:2026,title:'Self-Defense & Safety Workshop',type:'Training',loc:'Chicago Community Center, Chicago IL',time:'10:00 AM CST',attending:62,tag:'Guardian+'},
+  {month:'APR',day:15,year:2026,title:'Spring Defense Corps Training — Enrollment Closes',type:'Defense Corps',loc:'All Regional Hubs',time:'Deadline',attending:0,tag:'Guardian+'},
+  {month:'MAY',day:3,year:2026,title:'National Legislative Summit',type:'Advocacy',loc:'Washington D.C. — Capitol Hill',time:'9:00 AM EST',attending:88,tag:'All Members'},
+  {month:'JUL',day:18,year:2026,title:'Annual Blended Heritage Summit — Day 1',type:'Annual Event',loc:'Atlanta Convention Center',time:'8:00 AM EST',attending:240,tag:'All Members'},
+];
+
+const ACTIVITY=[
+  {color:'#88cc66',txt:'<strong>Dues paid</strong> for March 2026',date:'Mar 1, 2026'},
+  {color:var_gold(),txt:'<strong>RSVP confirmed</strong> for Detroit Chapter Meeting',date:'Feb 28, 2026'},
+  {color:'#6699ff',txt:'<strong>Profile updated</strong> — bio & chapter info',date:'Feb 14, 2026'},
+  {color:'#ee8833',txt:'<strong>Donation made</strong> — $50 to Defense Corps fund',date:'Feb 1, 2026'},
+  {color:'#88cc66',txt:'<strong>Dues paid</strong> for February 2026',date:'Feb 1, 2026'},
+];
+
+const DUES_HIST=[
+  {date:'Mar 1, 2026',amt:'$50.00',method:'Visa ••4821',status:'ok'},
+  {date:'Feb 1, 2026',amt:'$50.00',method:'Visa ••4821',status:'ok'},
+  {date:'Jan 1, 2026',amt:'$50.00',method:'Visa ••4821',status:'ok'},
+  {date:'Dec 1, 2025',amt:'$50.00',method:'Visa ••4821',status:'ok'},
+  {date:'Nov 1, 2025',amt:'$50.00',method:'Visa ••4821',status:'ok'},
+];
+
+function var_gold(){return '#c9a84c';}
+
+// ══ STATE ════════════════════════════════════════════════
+let currentUser=JSON.parse(localStorage.getItem('bbbc-member')||'null');
+let rsvpd=new Set(JSON.parse(localStorage.getItem('bbbc-rsvp')||'[]'));
+
+// ══ INIT ═════════════════════════════════════════════════
+(function init(){
+  buildTeaserRows();
+  if(currentUser) showDashboard();
+  else showLogin();
+})();
+
+function showLogin(){
+  document.getElementById('login-view').style.display='block';
+  document.getElementById('dashboard-view').style.display='none';
+}
+function showDashboard(){
+  document.getElementById('login-view').style.display='none';
+  document.getElementById('dashboard-view').style.display='block';
+  populateDash();
+}
+
+// ══ LOGIN / LOGOUT ════════════════════════════════════════
+function handleLogin(e){
+  e.preventDefault();
+  const email=document.getElementById('login-email').value.trim();
+  const parts=email.split('@')[0].split(/[._\-]/);
+  const fname=capitalize(parts[0]||'Member');
+  const lname=capitalize(parts[1]||'');
+  const tiers=['Advocate','Guardian','Guardian','Vanguard'];
+  const chapters=['Detroit HQ','Atlanta','Chicago','Los Angeles','New York','Houston'];
+  const user={
+    name:fname+(lname?' '+lname:''),fname,lname,email,
+    phone:'',bio:'',role:'General Member',
+    tier:tiers[Math.floor(Math.random()*tiers.length)],
+    chapter:chapters[Math.floor(Math.random()*chapters.length)],
+    since:'2024',
+    id:'MBR-'+Math.random().toString(36).slice(2,8).toUpperCase().replace(/[^A-Z0-9]/g,'X'),
+  };
+  localStorage.setItem('bbbc-member',JSON.stringify(user));
+  currentUser=user;
+  showDashboard();
+  toast('Welcome back, '+user.fname+'.');
+}
+function handleLogout(){
+  localStorage.removeItem('bbbc-member');
+  currentUser=null;
+  showLogin();
+  toast('Signed out.');
+}
+function joinNow(){document.getElementById('tiers').scrollIntoView({behavior:'smooth'});}
+function capitalize(s){return s?s[0].toUpperCase()+s.slice(1).toLowerCase():'';}
+
+// ══ POPULATE DASHBOARD ══════════════════════════════════
+function populateDash(){
+  const u=currentUser;
+  document.getElementById('dash-name').textContent=u.name;
+  document.getElementById('dash-tier-badge').textContent=u.tier;
+  document.getElementById('ds-since').textContent=u.since;
+  document.getElementById('ds-chapter').textContent=u.chapter;
+  document.getElementById('ds-tier').textContent=u.tier;
+  document.getElementById('ds-id').textContent=u.id;
+
+  // Profile
+  document.getElementById('prof-disp-name').textContent=u.name;
+  document.getElementById('prof-disp-id').textContent=u.id;
+  document.getElementById('pf-first').value=u.fname||'';
+  document.getElementById('pf-last').value=u.lname||'';
+  document.getElementById('pf-email').value=u.email||'';
+  document.getElementById('pf-phone').value=u.phone||'';
+  document.getElementById('pf-bio').value=u.bio||'';
+  document.getElementById('pf-role').value=u.role||'';
+  const chSel=document.getElementById('pf-chapter');
+  for(let i=0;i<chSel.options.length;i++)if(chSel.options[i].text===u.chapter){chSel.selectedIndex=i;break;}
+  const tp=document.getElementById('prof-tier-pill');
+  tp.textContent=u.tier;
+  tp.className='tier-pill tier-'+u.tier.toLowerCase();
+
+  // Activity
+  const al=document.getElementById('activity-list');al.innerHTML='';
+  ACTIVITY.forEach(a=>{
+    const li=document.createElement('li');li.className='act-item';
+    li.innerHTML=`<span class="act-dot" style="background:${a.color}"></span><div><div class="act-txt">${a.txt}</div><div class="act-date">${a.date}</div></div>`;
+    al.appendChild(li);
+  });
+
+  // Next event preview
+  const ne=EVENTS[0];
+  document.getElementById('next-event-preview').innerHTML=`
+    <div style="display:flex;gap:14px;align-items:center">
+      <div class="event-date-box" style="min-width:60px;text-align:center;padding:8px 6px">
+        <div class="edb-month">${ne.month}</div><div class="edb-day">${ne.day}</div>
+      </div>
+      <div><div style="font-family:'Oswald',sans-serif;font-size:14px;color:#fff;margin-bottom:3px">${ne.title}</div>
+      <div style="font-size:11px;color:rgba(245,240,232,0.4)">${ne.time} · ${ne.loc}</div></div>
+    </div>`;
+
+  buildDirectory();
+  buildEvents();
+  buildDuesHistory();
+}
+
+// ══ DIRECTORY ════════════════════════════════════════════
+function tierClass(t){return 'tier-'+t.toLowerCase();}
+
+function buildDirectory(){
+  renderDir(MEMBERS);
+}
+function renderDir(list){
+  const tbody=document.getElementById('dir-body');tbody.innerHTML='';
+  list.forEach(m=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><div class="member-name-cell"><img class="member-avatar" src="${m.avatar}" alt="${m.name}"><span>${m.name}</span></div></td>
+      <td>${m.chapter}</td><td>${m.role}</td>
+      <td><span class="tier-pill ${tierClass(m.tier)}">${m.tier}</span></td>
+      <td>${m.joined}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('member-count').textContent=list.length+' member'+(list.length!==1?'s':'');
+}
+function filterDir(){
+  const q=document.getElementById('dir-search').value.toLowerCase();
+  const ch=document.getElementById('filter-chapter').value;
+  const ti=document.getElementById('filter-tier').value;
+  const filtered=MEMBERS.filter(m=>{
+    const matchQ=!q||m.name.toLowerCase().includes(q)||m.chapter.toLowerCase().includes(q)||m.role.toLowerCase().includes(q);
+    const matchC=!ch||m.chapter===ch;
+    const matchT=!ti||m.tier===ti;
+    return matchQ&&matchC&&matchT;
+  });
+  renderDir(filtered);
+}
+
+// ══ EVENTS ═══════════════════════════════════════════════
+function buildEvents(){
+  const el=document.getElementById('events-list');el.innerHTML='';
+  EVENTS.forEach((ev,i)=>{
+    const going=rsvpd.has(i);
+    const card=document.createElement('div');card.className='event-card';
+    card.innerHTML=`
+      <div class="event-date-box">
+        <div class="edb-month">${ev.month}</div>
+        <div class="edb-day">${ev.day}</div>
+        <div class="edb-year">${ev.year}</div>
+      </div>
+      <div class="event-info">
+        <div class="event-tag">${ev.tag}</div>
+        <h3>${ev.title}</h3>
+        <div class="emeta">
+          <span>📍 ${ev.loc}</span>
+          <span>🕐 ${ev.time}</span>
+          <span>🏷 ${ev.type}</span>
+        </div>
+      </div>
+      <div class="rsvp-col">
+        <button class="rsvp-btn${going?' going':''}" id="rsvp-btn-${i}" onclick="toggleRSVP(${i})">${going?'✓ Going':'RSVP'}</button>
+        ${ev.attending>0?`<div class="rsvp-cnt">${ev.attending+(going&&!rsvpd.has(i)?0:going?1:0)} attending</div>`:''}
+      </div>`;
+    el.appendChild(card);
+  });
+}
+function toggleRSVP(i){
+  if(rsvpd.has(i)){rsvpd.delete(i);toast('RSVP cancelled.');}
+  else{rsvpd.add(i);toast('RSVP confirmed for '+EVENTS[i].title.split('—')[0].trim()+'!');}
+  localStorage.setItem('bbbc-rsvp',JSON.stringify([...rsvpd]));
+  buildEvents();
+}
+
+// ══ DUES HISTORY ═════════════════════════════════════════
+function buildDuesHistory(){
+  const tb=document.getElementById('dues-history');tb.innerHTML='';
+  DUES_HIST.forEach(h=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${h.date}</td><td>${h.amt}</td><td>${h.method}</td>
+      <td><span class="hist-status ${h.status==='ok'?'hist-ok':'hist-pend'}">${h.status==='ok'?'✓ Paid':'Pending'}</span></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+// ══ PROFILE SAVE ═════════════════════════════════════════
+function saveProfile(){
+  currentUser.fname=document.getElementById('pf-first').value;
+  currentUser.lname=document.getElementById('pf-last').value;
+  currentUser.name=currentUser.fname+' '+currentUser.lname;
+  currentUser.email=document.getElementById('pf-email').value;
+  currentUser.phone=document.getElementById('pf-phone').value;
+  currentUser.bio=document.getElementById('pf-bio').value;
+  currentUser.role=document.getElementById('pf-role').value;
+  currentUser.chapter=document.getElementById('pf-chapter').value;
+  localStorage.setItem('bbbc-member',JSON.stringify(currentUser));
+  document.getElementById('dash-name').textContent=currentUser.name;
+  document.getElementById('prof-disp-name').textContent=currentUser.name;
+  toast('Profile saved.');
+}
+
+// ══ TABS ═════════════════════════════════════════════════
+function showTab(name,el){
+  document.querySelectorAll('.dash-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.dash-nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+// ══ TEASER ROWS ══════════════════════════════════════════
+function buildTeaserRows(){
+  const tb=document.getElementById('teaser-rows');
+  MEMBERS.slice(0,6).forEach(m=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><div class="member-name-cell"><img class="member-avatar" src="${m.avatar}" alt=""><span>${m.name}</span></div></td>
+      <td>${m.chapter}</td><td>${m.role}</td>
+      <td><span class="tier-pill ${tierClass(m.tier)}">${m.tier}</span></td>
+      <td>${m.joined}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+// ══ TOAST ════════════════════════════════════════════════
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
