@@ -54,7 +54,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,0.9
 .news-search:focus{border-color:var(--gold);}
 .news-search::placeholder{color:rgba(245,240,232,0.25);}
 .cat-filters{display:flex;gap:6px;flex-wrap:wrap;}
-.cat-btn{padding:7px 14px;background:transparent;border:1px solid rgba(201,168,76,0.18);color:rgba(245,240,232,0.45);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .18s;}
+.cat-btn{padding:10px 16px;background:transparent;border:1px solid rgba(201,168,76,0.18);color:rgba(245,240,232,0.45);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .18s;}
 .cat-btn:hover{border-color:rgba(201,168,76,0.45);color:rgba(245,240,232,0.8);}
 .cat-btn.active{background:rgba(184,0,0,0.15);border-color:var(--red);color:#fff;}
 #result-count{font-size:11px;color:rgba(245,240,232,0.28);letter-spacing:.5px;white-space:nowrap;}
@@ -106,7 +106,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,0.9
 #art-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;align-items:flex-start;justify-content:center;padding:80px 20px 40px;overflow-y:auto;backdrop-filter:blur(3px);}
 #art-overlay.open{display:flex;}
 #art-modal{background:#111008;border:1px solid rgba(201,168,76,0.2);max-width:780px;width:100%;position:relative;}
-.art-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.2);color:rgba(245,240,232,0.55);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;z-index:2;}
+.art-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.2);color:rgba(245,240,232,0.55);width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;z-index:2;}
 .art-close:hover{border-color:var(--gold);color:var(--gold);}
 #art-hero-img{width:100%;height:280px;object-fit:cover;display:block;}
 .art-content{padding:32px 36px 40px;}
@@ -164,6 +164,7 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
   footer{flex-direction:column;gap:12px;text-align:center;}
 }
 </style>
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
@@ -185,6 +186,9 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
     </svg>
     <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
   </a>
+  <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
@@ -344,287 +348,23 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
 
 <div id="toast"></div>
 
+<script src="scripts/news.js"></script>
 <script>
-// ══ ARTICLE DATA ═════════════════════════════════════════
-const ARTICLES=[
-  {
-    id:0,cat:'Legislation',date:'March 18, 2026',read:'8 min',img:'https://picsum.photos/800/420?random=201',
-    title:'BBBC Lobbies for Multiracial Recognition Act Before Senate Subcommittee',
-    excerpt:'Delegates delivered powerful testimony pressing for federal recognition of mixed-heritage identity in census, employment, and legal documentation.',
-    author:'Sofia Nguyen-Brooks',authorRole:'Legislative Correspondent',authorImg:'https://picsum.photos/60/60?random=301',
-    tags:['Legislation','Civil Rights','Identity','Washington D.C.'],
-    body:`<p>In a landmark appearance before the Senate Subcommittee on Civil Rights, a five-person BBBC delegation led by Secretary General Andrew Peterson delivered hours of testimony outlining the systemic gaps facing multiracial and mixed-heritage Americans in federal documentation, employment classification, and legal identity frameworks.</p>
-<h3>The Core Argument</h3>
-<p>The BBBC's position, outlined in a 47-page brief submitted to the subcommittee, centers on the inadequacy of existing racial classification systems — primarily the OMB Directive 15 categories — which force hybrid individuals to choose a single racial identity or select a generic "Two or More Races" box that erases cultural specificity.</p>
-<blockquote>"When the government cannot see you clearly, it cannot serve you, protect you, or count you. Our people fall through every crack because no one built the system with us in mind." — Andrew Peterson, Secretary General</blockquote>
-<h3>Responses from the Subcommittee</h3>
-<p>Senator Maya Okafor (D-MI), herself of mixed Nigerian-Irish heritage, expressed strong support for the BBBC's proposal and indicated she would introduce companion legislation before the summer recess. Two Republican members of the subcommittee raised concerns about implementation costs and potential census complexity, though no formal objections were filed.</p>
-<p>The session drew coverage from The Washington Post, NPR, and several civil rights legal journals. BBBC representatives are scheduled to return for follow-up hearings in May.</p>
-<h3>What Comes Next</h3>
-<p>The Multiracial Recognition Act, if passed, would mandate that federal agencies offer expanded multiracial classification options across all data collection systems by 2028. The BBBC has pledged to mobilize its full member base for a grassroots lobbying push in the interim period.</p>`
-  },
-  {
-    id:1,cat:'Defense Corps',date:'March 10, 2026',read:'5 min',img:'https://picsum.photos/800/420?random=202',
-    title:'Spring Training Cycle Opens — 200 Slots Available Across Six Regional Hubs',
-    excerpt:'The BBBC Defense Corps has opened registration for the Spring 2026 cycle. Applications close April 15 with enrollment at six regional hubs nationwide.',
-    author:'Col. (Ret.) Damon Reyes',authorRole:'Defense Corps Commander',authorImg:'https://picsum.photos/60/60?random=303',
-    tags:['Defense Corps','Training','Enrollment'],
-    body:`<p>The Brotherhood of Blended Bloodlines Committee Defense Corps has officially opened enrollment for the Spring 2026 training cycle, with 200 available slots distributed across six regional hubs: Detroit, Atlanta, Chicago, Houston, Los Angeles, and New York.</p>
-<h3>What the Training Covers</h3>
-<p>The 12-week program covers personal protection fundamentals, community security protocols, conflict de-escalation, legal rights during confrontations with law enforcement, and — for Guardian tier members and above — supervised firearms safety and tactical movement training.</p>
-<blockquote>"We are not training soldiers. We are training neighbors who refuse to be victims." — Col. Damon Reyes</blockquote>
-<h3>Eligibility</h3>
-<p>Enrollment is open to BBBC members in good standing at the Guardian tier or above. Candidates must pass a background screening, a physical fitness baseline assessment, and a 30-minute interview with a Chapter Marshal. Members with prior law enforcement or military experience may apply for an accelerated track.</p>
-<h3>How to Apply</h3>
-<p>Applications are available through the member portal. The April 15 deadline is firm — late applications will be placed on a waitlist for the Fall 2026 cycle. Members are strongly encouraged to apply early as the Chicago and Atlanta hubs are already at 60% capacity.</p>`
-  },
-  {
-    id:2,cat:'Community',date:'February 28, 2026',read:'4 min',img:'https://picsum.photos/800/420?random=203',
-    title:'Annual Blended Heritage Summit Confirmed for Atlanta — July 18–20',
-    excerpt:'This year\'s summit will feature keynote speakers, policy panels, cultural exhibitions, chapter championships, and the largest gathering in BBBC history.',
-    author:'Aisha St. Claire-Webb',authorRole:'Director of Advocacy',authorImg:'https://picsum.photos/60/60?random=304',
-    tags:['Events','Community','Atlanta','Summit'],
-    body:`<p>The Brotherhood of Blended Bloodlines Committee has confirmed Atlanta, Georgia as the host city for the 2026 Annual Blended Heritage Summit, scheduled for July 18–20 at the Atlanta Convention Center. This year's summit is projected to be the largest in BBBC history, with over 1,200 registered attendees expected from all 14 active chapters.</p>
-<h3>Programming Highlights</h3>
-<p>Day one will open with a keynote address from Chairman Joshua Wyand, followed by a full day of policy panels covering legislative strategy, Defense Corps expansion, and youth program funding. Day two focuses on community and culture, featuring heritage exhibitions, spoken word, live music, and the popular "Roots & Routes" storytelling stage where members share their blended heritage journeys.</p>
-<p>Day three — historically the most anticipated — hosts the Inter-Chapter Championship Finals, where the Riceskins (East Chapter) and Lightskins (West Chapter) compete across multiple events in front of the full assembly.</p>
-<h3>Registration</h3>
-<p>Early-bird registration is open now through the member portal. Guardian and Vanguard tier members receive discounted rates; Vanguard members attend free as part of their membership benefits. Hotel room blocks have been secured at the Marriott Marquis and the Westin Peachtree Plaza at negotiated group rates.</p>`
-  },
-  {
-    id:3,cat:'Press Release',date:'February 20, 2026',read:'3 min',img:'https://picsum.photos/800/420?random=204',
-    title:'BBBC Condemns Hate Crime Wave Targeting Multiracial Families in Three States',
-    excerpt:'Following a series of documented incidents in Ohio, Texas, and Florida, the Brotherhood has issued an official condemnation and activated its legal aid rapid-response team.',
-    author:'BBBC Communications Office',authorRole:'Official Statement',authorImg:'https://picsum.photos/60/60?random=305',
-    tags:['Press Release','Civil Rights','Legal Aid'],
-    body:`<p>The Brotherhood of Blended Bloodlines Committee today issued an official condemnation of a wave of targeted incidents against multiracial families documented in Ohio, Texas, and Florida over the past six weeks. At least 11 families have reported property damage, harassment, and in two cases, physical assault, with investigators noting the use of language specifically targeting mixed-race households.</p>
-<h3>BBBC Response</h3>
-<p>The BBBC Legal Aid division has activated its rapid-response protocol, dispatching four staff attorneys to work directly with affected families on documentation, civil complaints, and coordination with federal hate crime investigators. The Legal Aid hotline has seen a 340% spike in calls from the affected regions over the past two weeks.</p>
-<blockquote>"This is not random. This is organized, and it is escalating. The BBBC will not stand by while our families are targeted." — Joshua Wyand, Chairman</blockquote>
-<h3>Defense Corps Advisory</h3>
-<p>Defense Corps chapter marshals in Ohio, Texas, and Florida have been placed on elevated readiness status. Members in those regions are advised to review their personal security protocols and contact their Chapter Marshal for updated community safety briefings.</p>
-<p>Anyone experiencing targeted harassment is encouraged to contact the BBBC Legal Aid Hotline at (800) 555-0338 immediately.</p>`
-  },
-  {
-    id:4,cat:'Op-Ed',date:'February 12, 2026',read:'6 min',img:'https://picsum.photos/800/420?random=205',
-    title:'Why "What Are You?" Is Still a Weapon — And What We Do About It',
-    excerpt:'BBBC Director of Advocacy Aisha St. Claire-Webb on the politics of the mixed-race question, identity policing, and why clarity is an act of resistance.',
-    author:'Aisha St. Claire-Webb',authorRole:'Director of Advocacy',authorImg:'https://picsum.photos/60/60?random=304',
-    tags:['Op-Ed','Identity','Advocacy'],
-    body:`<p>I have been asked "what are you?" more times than I can count. At gas stations, in waiting rooms, by people who have just met me and somehow feel entitled to a genealogy report before we've exchanged names. As a child I found the question confusing. As a teenager, humiliating. As an adult, I've come to recognize it for what it is: a demand that I resolve someone else's discomfort with ambiguity.</p>
-<h3>The Question as Control</h3>
-<p>The "what are you" question is rarely innocent. It emerges from a social infrastructure that insists on sorting people into discrete, legible categories — categories that were designed to enforce hierarchy, not describe humanity. When a mixed-race person refuses to fit cleanly into those categories, they become a problem to be solved rather than a person to be known.</p>
-<blockquote>"Identity is not a riddle you owe the world an answer to. It is yours — complex, layered, and non-negotiable."</blockquote>
-<h3>The BBBC Position</h3>
-<p>This is why the Brotherhood's legislative agenda goes beyond symbolic recognition. We are fighting for a world in which hybrid identity is not a source of bureaucratic confusion, legal ambiguity, or social suspicion — but a fully supported, clearly recognized, legally protected mode of being human. That work happens in the halls of Congress, yes. But it also happens in the way we raise our children, the stories we tell at the Summit, and the choice to answer "what are you" with: "I am exactly what you see."</p>`
-  },
-  {
-    id:5,cat:'Community',date:'February 5, 2026',read:'4 min',img:'https://picsum.photos/800/420?random=206',
-    title:'BBBC Youth Scholarship Fund Awards $120,000 to 24 Students Nationwide',
-    excerpt:'The 2026 scholarship cycle saw a record number of applicants. Recipients represent 14 states and a broad range of mixed-heritage backgrounds.',
-    author:'Amara Johansson-Bell',authorRole:'Youth Program Lead',authorImg:'https://picsum.photos/60/60?random=306',
-    tags:['Community','Youth','Scholarship'],
-    body:`<p>The Brotherhood of Blended Bloodlines Committee Youth Scholarship Fund has awarded $120,000 in grants to 24 students across 14 states for the 2026 academic year, marking the largest single scholarship cycle in the program's seven-year history. Awards range from $3,500 to $8,000 and are renewable for up to four years pending academic standing.</p>
-<h3>Who Was Selected</h3>
-<p>Recipients range from high school seniors entering university to graduate students in law, public policy, social work, and medicine. Selection criteria emphasize community involvement, demonstrated commitment to hybrid identity advocacy, and financial need. Essays this cycle explored themes of belonging, institutional discrimination, and what it means to inherit multiple cultural legacies simultaneously.</p>
-<h3>A Note from the Committee</h3>
-<p>Youth Program Lead Amara Johansson-Bell noted that this year's application pool was the most competitive on record: "The quality of these essays was extraordinary. These young people are not waiting for the world to recognize them — they are building the world that will." A reception honoring scholarship recipients will be held at the Annual Summit in Atlanta.</p>`
-  },
-  {
-    id:6,cat:'Defense Corps',date:'January 28, 2026',read:'5 min',img:'https://picsum.photos/800/420?random=207',
-    title:'Detroit Defense Corps Completes Winter Tactical Review — Highest Pass Rate on Record',
-    excerpt:'The Detroit HQ chapter posted an 89% completion rate across its Winter 2025–26 training cohort, with 12 graduates advancing to the command track.',
-    author:'Col. (Ret.) Damon Reyes',authorRole:'Defense Corps Commander',authorImg:'https://picsum.photos/60/60?random=303',
-    tags:['Defense Corps','Detroit','Training'],
-    body:`<p>The Detroit Headquarters chapter of the BBBC Defense Corps concluded its Winter 2025–26 training cohort with an 89% completion and pass rate — the highest recorded across any single chapter cycle since the Corps' founding. Of 67 enrolled participants, 60 successfully completed all 12 weeks of training.</p>
-<h3>Command Track Graduates</h3>
-<p>Twelve graduates from this cohort qualified for advancement to the Command Track, which prepares candidates for Chapter Marshal and squad-level leadership positions. Those 12 will begin the eight-week Command Track program in February under the direct supervision of Commander Reyes and three senior Corps instructors.</p>
-<blockquote>"Detroit built this organization. It is only fitting that Detroit leads by example." — Marcus Obi-Chen, Detroit Chapter Marshal</blockquote>
-<h3>Looking Ahead</h3>
-<p>The strong performance of the Detroit cohort will inform updated training protocols being rolled out to all 14 regional chapters ahead of the Spring cycle. Commander Reyes has announced that video training resources developed in Detroit will be made available to all enrolled Corps members through the member portal beginning in March.</p>`
-  },
-  {
-    id:7,cat:'Legislation',date:'January 15, 2026',read:'5 min',img:'https://picsum.photos/800/420?random=208',
-    title:'Federal Judge Rules in Favor of Multiracial Plaintiff in Landmark Identity Discrimination Case',
-    excerpt:'A federal ruling backed by BBBC legal support sets a significant precedent for mixed-heritage individuals facing identity-based discrimination in employment.',
-    author:'Sofia Nguyen-Brooks',authorRole:'Legislative Correspondent',authorImg:'https://picsum.photos/60/60?random=301',
-    tags:['Legislation','Legal Aid','Civil Rights'],
-    body:`<p>A federal district court in the Northern District of Illinois ruled in favor of plaintiff Danielle Osei-Kofi, a biracial woman who was denied a promotion at a financial services firm after a supervisor was recorded questioning whether she was "really Black enough" to represent a diversity initiative. The BBBC Legal Aid team supported Ms. Osei-Kofi's case with both direct legal assistance and an amicus brief outlining the pattern of hybrid identity discrimination in corporate settings.</p>
-<h3>Why This Ruling Matters</h3>
-<p>The judge's ruling explicitly acknowledged that discrimination targeting an individual's multiracial or ambiguous racial identity constitutes actionable racial discrimination under Title VII of the Civil Rights Act. This is the first federal ruling to do so with this level of specificity, setting a precedent that BBBC attorneys believe will be cited in future cases nationally.</p>
-<h3>BBBC Statement</h3>
-<p>"This ruling validates what our members have lived every day," said Director of Advocacy Aisha St. Claire-Webb. "Being too much of one thing or not enough of another has always been used as a weapon against blended people. The courts are finally beginning to understand that."</p>`
-  },
-  {
-    id:8,cat:'Events',date:'January 8, 2026',read:'3 min',img:'https://picsum.photos/800/420?random=209',
-    title:'Chapter Championship Season 4 Standings: Riceskins Lead 69–67 Entering Final Round',
-    excerpt:'With one round remaining in the Season 4 Inter-Chapter Championship, the East Chapter Riceskins hold a narrow two-point lead over the West Chapter Lightskins.',
-    author:'BBBC Events Office',authorRole:'Championship Coverage',authorImg:'https://picsum.photos/60/60?random=307',
-    tags:['Events','Championship'],
-    body:`<p>Season 4 of the BBBC Inter-Chapter Championship has reached its final stretch, with the East Chapter Riceskins holding a narrow 69–67 lead over the West Chapter Lightskins heading into the championship finals at the Annual Summit in Atlanta this July.</p>
-<h3>Season Recap</h3>
-<p>The Riceskins took an early lead in the season's opening rounds, driven by dominant performances in the community service and legislative advocacy scoring categories. The Lightskins clawed back significant ground in the winter rounds, posting their strongest-ever scores in the cultural programming and recruitment metrics.</p>
-<p>The two-point gap is the smallest margin the championship has seen in four seasons, and both chapter liaisons have confirmed their teams are entering Atlanta with maximum delegation sizes.</p>
-<blockquote>"We're coming to Atlanta to close the gap and take the cup. The Riceskins had a good run." — West Chapter Representative, Lightskins</blockquote>
-<h3>Final Round Events</h3>
-<p>The championship finals will be contested across five events at the Summit: community showcase, debate, fitness relay, cultural trivia, and the closing ceremony vote-off. Points will be totaled live on the final evening with the announcement expected at the Saturday night gala.</p>`
-  },
-  {
-    id:9,cat:'Press Release',date:'December 20, 2025',read:'3 min',img:'https://picsum.photos/800/420?random=210',
-    title:'BBBC Reaches 10,000 Member Milestone — Chairman Issues Statement',
-    excerpt:'The Brotherhood has crossed the 10,000 registered member threshold, marking a major milestone for the organization entering its 17th year.',
-    author:'BBBC Communications Office',authorRole:'Official Statement',authorImg:'https://picsum.photos/60/60?random=305',
-    tags:['Press Release','Milestone','Community'],
-    body:`<p>The Brotherhood of Blended Bloodlines Committee has officially surpassed 10,000 registered members, a milestone the organization reached on December 18th with new enrollments from its newest chapter in Seattle, Washington.</p>
-<h3>Chairman's Statement</h3>
-<p>Chairman Joshua Wyand issued the following statement: "When I founded this organization in 2009, I was one man with a dining room table, a legal pad, and a conviction that the blended community deserved to be seen. Today we are 10,000 strong, organized in 14 cities, with attorneys in federal courts, soldiers in training halls, and advocates on Capitol Hill. We are just getting started."</p>
-<h3>Growth by the Numbers</h3>
-<p>BBBC membership has grown 340% over the past five years, with the largest year-on-year jump recorded in 2025. The Guardian tier remains the most popular membership level at 42% of the total membership base. The organization projects reaching 15,000 members by the end of 2027.</p>`
-  },
-  {
-    id:10,cat:'Op-Ed',date:'December 10, 2025',read:'7 min',img:'https://picsum.photos/800/420?random=211',
-    title:'The Case for an Armed Blended Community: Why the Defense Corps Matters',
-    excerpt:'Chairman Joshua Wyand makes the case for why self-defense infrastructure is inseparable from civil rights advocacy for marginalized mixed-race communities.',
-    author:'Joshua A.C. Wyand',authorRole:'Chairman & Founder',authorImg:'https://picsum.photos/60/60?random=302',
-    tags:['Op-Ed','Defense Corps','Civil Rights'],
-    body:`<p>I want to be direct with you: the BBBC Defense Corps is not a militaristic indulgence. It is not a cosplay of resistance. It is a calculated, lawful, and morally necessary response to the documented, escalating reality that members of the blended community face targeted violence — and that no existing institution has built infrastructure specifically to address it.</p>
-<h3>The Gap No One Fills</h3>
-<p>Law enforcement, even at its best, is reactive. Civil rights organizations provide legal recourse after harm has been done. Community watch programs are informal and under-resourced. The BBBC Defense Corps exists in the space between — organized, trained, and present before the moment of violence rather than after it.</p>
-<blockquote>"Self-defense is not the opposite of dignity. It is its prerequisite."</blockquote>
-<h3>What We Are and Are Not</h3>
-<p>We are not a militia. We have no political enemies. We do not train for offensive operations. We train for protection — of our members, their families, and the communities we serve. Every Corps operation is conducted within the full scope of applicable federal and state law, with legal oversight from our in-house counsel.</p>
-<p>The blended community has been told for generations to be patient — that visibility will come, that recognition will come, that safety will come. The Defense Corps is our answer to that patience: we are not waiting anymore.</p>`
-  },
-  {
-    id:11,cat:'Community',date:'November 22, 2025',read:'4 min',img:'https://picsum.photos/800/420?random=212',
-    title:'New Chapter Opens in Seattle — BBBC Now Active in 14 Cities',
-    excerpt:'The Seattle chapter officially launched with 47 founding members, marking the BBBC\'s first presence in the Pacific Northwest.',
-    author:'Aisha St. Claire-Webb',authorRole:'Director of Advocacy',authorImg:'https://picsum.photos/60/60?random=304',
-    tags:['Community','Seattle','Expansion'],
-    body:`<p>The Brotherhood of Blended Bloodlines Committee officially launched its 14th chapter in Seattle, Washington on November 15th, 2025, with a founding membership of 47 individuals drawn from Seattle's substantial and diverse mixed-heritage community. The launch event, held at the Langston Hughes Performing Arts Institute, drew over 200 community members.</p>
-<h3>Why Seattle</h3>
-<p>Seattle was identified by the BBBC expansion committee as a priority location based on census data showing one of the highest concentrations of multiracial residents in the United States, combined with a documented gap in advocacy infrastructure specifically serving the blended community. The city's existing civil rights network has welcomed the BBBC's arrival.</p>
-<h3>Chapter Leadership</h3>
-<p>Zara Singh-Morrison, a veteran community organizer and BBBC member since 2021, has been appointed the Seattle chapter's founding Media Director and interim chapter lead. A chapter marshal election is scheduled for February 2026. The Seattle chapter is already pursuing partnerships with three local community organizations and is planning its first public advocacy event for spring.</p>`
-  },
-];
-
-// ══ STATE ══════════════════════════════════════════════
-let activeCat='';
-let visibleCount=6;
-
-// ══ INIT ═══════════════════════════════════════════════
-(function init(){
-  renderSidebar();
-  filterNews();
+(function(){
+  var nav = document.querySelector('nav');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 })();
-
-// ══ CATEGORY FILTER ════════════════════════════════════
-function setCat(cat,btn){
-  activeCat=cat;
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-  // Find the matching button
-  document.querySelectorAll('.cat-btn').forEach(b=>{
-    if((!cat&&b.textContent==='All')||(b.textContent===cat))b.classList.add('active');
-  });
-  visibleCount=6;
-  filterNews();
-}
-
-function filterNews(){
-  const q=document.querySelector('.news-search').value.toLowerCase();
-  const filtered=ARTICLES.filter(a=>{
-    const matchCat=!activeCat||a.cat===activeCat;
-    const matchQ=!q||a.title.toLowerCase().includes(q)||a.excerpt.toLowerCase().includes(q)||a.cat.toLowerCase().includes(q);
-    return matchCat&&matchQ;
-  });
-  renderGrid(filtered.slice(0,visibleCount));
-  document.getElementById('result-count').textContent=filtered.length+' article'+(filtered.length!==1?'s':'');
-  document.getElementById('load-more-btn').style.display=filtered.length>visibleCount?'inline-block':'none';
-  // store filtered for load more
-  window._filteredArts=filtered;
-}
-
-function loadMore(){
-  visibleCount+=6;
-  filterNews();
-}
-
-// ══ RENDER GRID ════════════════════════════════════════
-const CAT_COLORS={'Legislation':'#1a4a8a','Defense Corps':'#8a1a1a','Community':'#1a6a2a','Events':'#6a4a1a','Press Release':'#4a1a6a','Op-Ed':'#2a5a5a'};
-
-function renderGrid(list){
-  const grid=document.getElementById('news-grid');
-  // Keep load more wrapper
-  const lmw=document.getElementById('load-more-wrap');
-  grid.innerHTML='';
-  if(!list.length){
-    grid.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;color:rgba(245,240,232,0.3);font-style:italic;font-size:14px;">No articles found.</div>';
-    return;
-  }
-  list.forEach(a=>{
-    const div=document.createElement('div');div.className='news-card';
-    div.onclick=()=>openArticle(a.id);
-    div.innerHTML=`
-      <div class="nc-img-wrap">
-        <img src="${a.img}" alt="${a.title}" loading="lazy">
-        <span class="nc-cat" style="background:${CAT_COLORS[a.cat]||'#333'}">${a.cat}</span>
-      </div>
-      <div class="nc-body">
-        <div class="nc-title">${a.title}</div>
-        <div class="nc-excerpt">${a.excerpt}</div>
-        <div class="nc-footer">
-          <span class="nc-date">${a.date} · ${a.read} read</span>
-          <span class="nc-read">Read →</span>
-        </div>
-      </div>`;
-    grid.appendChild(div);
-  });
-}
-
-// ══ SIDEBAR ════════════════════════════════════════════
-function renderSidebar(){
-  const ul=document.getElementById('sb-recent');
-  ARTICLES.slice(0,5).forEach(a=>{
-    const li=document.createElement('li');
-    li.onclick=()=>openArticle(a.id);
-    li.innerHTML=`<img src="${a.img}" alt=""><div><div class="sb-r-title">${a.title}</div><div class="sb-r-date">${a.date}</div></div>`;
-    ul.appendChild(li);
-  });
-}
-
-// ══ ARTICLE MODAL ══════════════════════════════════════
-function openArticle(id){
-  const a=ARTICLES.find(x=>x.id===id);if(!a)return;
-  document.getElementById('art-hero-img').src=a.img;
-  const pill=document.getElementById('art-cat-pill');
-  pill.textContent=a.cat;pill.style.background=CAT_COLORS[a.cat]||'#333';pill.style.color='#fff';
-  document.getElementById('art-date').textContent=a.date;
-  document.getElementById('art-read-time').textContent='· '+a.read+' read';
-  document.getElementById('art-title').innerHTML='<h1 style="font-family:\'Oswald\',sans-serif;font-size:26px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:0">'+a.title+'</h1>';
-  document.getElementById('art-author-img').src=a.authorImg;
-  document.getElementById('art-author-name').textContent=a.author;
-  document.getElementById('art-author-role').textContent=a.authorRole;
-  document.getElementById('art-body').innerHTML=a.body;
-  const tagsEl=document.getElementById('art-tags');
-  tagsEl.innerHTML='<span style="font-family:\'Oswald\',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.45);margin-right:4px;">Tags:</span>';
-  a.tags.forEach(t=>{const s=document.createElement('span');s.className='tag-pill';s.textContent=t;tagsEl.appendChild(s);});
-  document.getElementById('art-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeArticle(){
-  document.getElementById('art-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-function maybeCloseArt(e){if(e.target===document.getElementById('art-overlay'))closeArticle();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeArticle();});
-
-// ══ TOAST ══════════════════════════════════════════════
-let toastTimer;
-function toast(msg){
-  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
-}
 </script>
 </body>
 </html>
