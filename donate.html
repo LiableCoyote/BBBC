@@ -47,7 +47,7 @@ p{line-height:1.8;color:rgba(245,240,232,0.75);font-size:15px;}
 .donate-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:start;}
 
 /* ── AMOUNT PICKER ── */
-.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.amount-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:16px;}
 .amt-btn{padding:14px 8px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.25);color:rgba(245,240,232,0.75);font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;cursor:pointer;text-align:center;transition:all .18s;position:relative;}
 .amt-btn:hover{border-color:var(--gold);color:var(--gold);}
 .amt-btn.active{background:rgba(184,0,0,0.2);border-color:var(--red);color:#fff;}
@@ -94,7 +94,7 @@ p{line-height:1.8;color:rgba(245,240,232,0.75);font-size:15px;}
 
 /* ── OTHER WAYS ── */
 .other-ways{margin-top:70px;padding-top:50px;border-top:1px solid rgba(201,168,76,0.15);}
-.ways-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:10px;}
+.ways-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:22px;margin-top:10px;}
 .way-card{background:var(--mid);border:1px solid rgba(201,168,76,0.12);padding:26px;transition:border-color .2s;}
 .way-card:hover{border-color:rgba(201,168,76,0.35);}
 .way-icon{font-size:28px;margin-bottom:12px;}
@@ -134,6 +134,7 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:30px 60px;dis
   footer{flex-direction:column;gap:14px;text-align:center;}
 }
 </style>
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
@@ -157,6 +158,9 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:30px 60px;dis
       <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
     </div>
   </a>
+  <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
@@ -238,9 +242,9 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:30px 60px;dis
         <div class="field-label" style="margin-bottom:0;">Payment Information</div>
         <input type="text" placeholder="Cardholder Name" required>
         <div class="card-row">
-          <div><input type="text" placeholder="Card Number" maxlength="19" required></div>
-          <div><input type="text" placeholder="MM / YY" maxlength="7" required></div>
-          <div><input type="text" placeholder="CVV" maxlength="4" required></div>
+          <div><input type="tel" inputmode="numeric" autocomplete="cc-number" placeholder="Card Number" maxlength="19" required></div>
+          <div><input type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" maxlength="7" required></div>
+          <div><input type="tel" inputmode="numeric" autocomplete="cc-csc" placeholder="CVV" maxlength="4" required></div>
         </div>
         <input type="text" placeholder="Billing ZIP Code" maxlength="10" required>
 
@@ -347,5 +351,22 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:30px 60px;dis
 </div>
 
 <script src="scripts/donate.js"></script>
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
 </body>
 </html>

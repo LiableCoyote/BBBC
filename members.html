@@ -77,7 +77,7 @@ p{line-height:1.8;color:rgba(245,240,232,0.72);font-size:14px;}
 
 /* TIERS */
 #tiers{padding:70px 60px;max-width:1060px;margin:0 auto;}
-.tiers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px;}
+.tiers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:10px;}
 .tier-card{background:var(--card);border:1px solid rgba(201,168,76,0.12);padding:24px 18px;display:flex;flex-direction:column;gap:0;transition:border-color .2s;position:relative;}
 .tier-card:hover{border-color:rgba(201,168,76,0.35);}
 .tier-card.featured{border-color:var(--gold);}
@@ -240,7 +240,6 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
   .nav-links{display:none;}
   .login-body{padding:40px 20px 0;}
   .login-split{grid-template-columns:1fr;}
-  .tiers-grid{grid-template-columns:1fr 1fr;}
   #tiers,#dir-teaser{padding:50px 20px;}
   .dash-body{flex-direction:column;}
   .dash-sidebar{width:100%;min-width:unset;display:flex;overflow-x:auto;padding:0;}
@@ -249,7 +248,11 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
   .overview-grid,.dues-grid,.profile-grid{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:12px;text-align:center;}
 }
+@media(max-width:600px){
+  .profile-grid{grid-template-columns:1fr;}
+}
 </style>
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
@@ -271,6 +274,9 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
     </svg>
     <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
   </a>
+  <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
@@ -426,7 +432,7 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
     <div class="divider"></div>
     <div class="teaser-wrap">
       <div class="teaser-blur">
-        <table class="member-table" style="width:100%;background:var(--card);padding:16px;">
+        <div style="overflow-x:auto"><table class="member-table" style="width:100%;background:var(--card);padding:16px;">
           <thead><tr><th>Member</th><th>Chapter</th><th>Role</th><th>Tier</th><th>Joined</th></tr></thead>
           <tbody id="teaser-rows"></tbody>
         </table>
@@ -524,10 +530,10 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
           </select>
           <span id="member-count"></span>
         </div>
-        <table class="member-table">
+        <div style="overflow-x:auto"><table class="member-table">
           <thead><tr><th>Member</th><th>Chapter</th><th>Role</th><th>Tier</th><th>Joined</th></tr></thead>
           <tbody id="dir-body"></tbody>
-        </table>
+        </table></div>
       </div>
 
       <!-- EVENTS -->
@@ -612,10 +618,10 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
           </div>
           <div class="dues-status-card">
             <h3>Payment History</h3>
-            <table class="history-table">
+            <div style="overflow-x:auto"><table class="history-table">
               <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
               <tbody id="dues-history"></tbody>
-            </table>
+            </table></div>
           </div>
         </div>
       </div>
@@ -636,5 +642,22 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
 <div id="toast"></div>
 
 <script src="scripts/members.js"></script>
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
 </body>
 </html>

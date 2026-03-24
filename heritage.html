@@ -112,6 +112,7 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
   footer{flex-direction:column;gap:12px;text-align:center;}
 }
 </style>
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
@@ -135,6 +136,9 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
     </svg>
     <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
   </a>
+  <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
@@ -520,6 +524,23 @@ function toast(msg){
   const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
   clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
 }
+</script>
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 </script>
 </body>
 </html>

@@ -54,7 +54,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,0.9
 .news-search:focus{border-color:var(--gold);}
 .news-search::placeholder{color:rgba(245,240,232,0.25);}
 .cat-filters{display:flex;gap:6px;flex-wrap:wrap;}
-.cat-btn{padding:7px 14px;background:transparent;border:1px solid rgba(201,168,76,0.18);color:rgba(245,240,232,0.45);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .18s;}
+.cat-btn{padding:10px 16px;background:transparent;border:1px solid rgba(201,168,76,0.18);color:rgba(245,240,232,0.45);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .18s;}
 .cat-btn:hover{border-color:rgba(201,168,76,0.45);color:rgba(245,240,232,0.8);}
 .cat-btn.active{background:rgba(184,0,0,0.15);border-color:var(--red);color:#fff;}
 #result-count{font-size:11px;color:rgba(245,240,232,0.28);letter-spacing:.5px;white-space:nowrap;}
@@ -106,7 +106,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,0.9
 #art-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;align-items:flex-start;justify-content:center;padding:80px 20px 40px;overflow-y:auto;backdrop-filter:blur(3px);}
 #art-overlay.open{display:flex;}
 #art-modal{background:#111008;border:1px solid rgba(201,168,76,0.2);max-width:780px;width:100%;position:relative;}
-.art-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.2);color:rgba(245,240,232,0.55);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;z-index:2;}
+.art-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.2);color:rgba(245,240,232,0.55);width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;z-index:2;}
 .art-close:hover{border-color:var(--gold);color:var(--gold);}
 #art-hero-img{width:100%;height:280px;object-fit:cover;display:block;}
 .art-content{padding:32px 36px 40px;}
@@ -164,6 +164,7 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
   footer{flex-direction:column;gap:12px;text-align:center;}
 }
 </style>
+<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
@@ -185,6 +186,9 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
     </svg>
     <div>Brotherhood of<br><span>Blended Bloodlines Committee</span></div>
   </a>
+  <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
@@ -345,5 +349,22 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
 <div id="toast"></div>
 
 <script src="scripts/news.js"></script>
+<script>
+(function(){
+  var nav = document.querySelector('nav');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
 </body>
 </html>
