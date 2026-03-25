@@ -18,6 +18,7 @@ function setupDOM() {
     <span id="ds-id"></span>
     <span id="prof-disp-name"></span>
     <span id="prof-disp-id"></span>
+    <img id="prof-avatar" src="">
     <input id="pf-first" value="">
     <input id="pf-last" value="">
     <input id="pf-email" value="">

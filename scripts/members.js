@@ -116,6 +116,7 @@ function populateDash() {
 
   document.getElementById('prof-disp-name').textContent = u.name;
   document.getElementById('prof-disp-id').textContent = u.id;
+  document.getElementById('prof-avatar').src = u.avatar || 'https://picsum.photos/200/200?random=99';
   document.getElementById('pf-first').value = u.fname || '';
   document.getElementById('pf-last').value = u.lname || '';
   document.getElementById('pf-email').value = u.email || '';
@@ -235,6 +236,26 @@ function buildDuesHistory() {
       <td><span class="hist-status ${h.status === 'ok' ? 'hist-ok' : 'hist-pend'}">${h.status === 'ok' ? '✓ Paid' : 'Pending'}</span></td>`;
     tb.appendChild(tr);
   });
+}
+
+// ══ PHOTO UPLOAD ═════════════════════════════════════════
+function handleAvatarUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    toast('Photo must be under 2 MB.');
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    document.getElementById('prof-avatar').src = dataUrl;
+    currentUser.avatar = dataUrl;
+    localStorage.setItem('bbbc-member', JSON.stringify(currentUser));
+    toast('Photo updated.');
+  };
+  reader.readAsDataURL(file);
 }
 
 // ══ PROFILE SAVE ═════════════════════════════════════════

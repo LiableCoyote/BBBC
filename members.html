@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Member Portal — Brotherhood of Blended Bloodlines Committee</title>
+<meta name="description" content="Access the BBBC member portal — view the directory, RSVP to events, manage your profile, and track your dues.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BBBC — Brotherhood of Blended Bloodlines Committee">
+<meta property="og:title" content="Member Portal — BBBC">
+<meta property="og:description" content="Access the BBBC member portal — view the directory, RSVP to events, manage your profile, and track your dues.">
+<meta property="og:image" content="https://liablecoyote.github.io/bbbc/Images/Josh.png">
+<meta property="og:url" content="https://liablecoyote.github.io/bbbc/members.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Member Portal — BBBC">
+<meta name="twitter:description" content="Access the BBBC member portal — view the directory, RSVP to events, manage your profile, and track your dues.">
+<meta name="twitter:image" content="https://liablecoyote.github.io/bbbc/Images/Josh.png">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -555,7 +566,8 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
             <div class="prof-name" id="prof-disp-name">—</div>
             <div class="prof-id" id="prof-disp-id">—</div>
             <div class="tier-pill tier-guardian" id="prof-tier-pill">Guardian</div>
-            <button class="btn btn-gold btn-sm" onclick="toast('Photo upload coming soon.')">Change Photo</button>
+            <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)">
+            <button class="btn btn-gold btn-sm" onclick="document.getElementById('avatar-input').click()">Change Photo</button>
           </div>
           <div class="prof-form">
             <h3>Personal Information</h3>
@@ -633,7 +645,7 @@ footer{background:#050505;border-top:2px solid var(--gold);padding:26px 60px;dis
 <footer>
   <div class="footer-logo">BBBC · Brotherhood of Blended Bloodlines Committee</div>
   <div class="footer-links">
-    <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+    <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a>
     <a href="donate.html">Donate</a><a href="members.html">Member Portal</a>
   </div>
   <div class="footer-copy">© 2026 BBBC. All rights reserved. Detroit, MI · Est. 2009</div>
