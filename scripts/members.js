@@ -318,7 +318,7 @@ if (typeof module !== 'undefined') {
     init, showLogin, showDashboard,
     handleLogin, handleLogout, joinNow, capitalize,
     populateDash, tierClass, buildDirectory, renderDir, filterDir,
-    buildEvents, toggleRSVP, buildDuesHistory, saveProfile, showTab,
+    buildEvents, toggleRSVP, buildDuesHistory, handleAvatarUpload, saveProfile, showTab,
     buildTeaserRows, toast, var_gold,
     _getCurrentUser: () => currentUser,
     _setCurrentUser: (u) => { currentUser = u; },

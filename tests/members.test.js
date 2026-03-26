@@ -362,4 +362,119 @@ describe('members.js', () => {
       expect(names).toContain(mod.MEMBERS[0].name);
     });
   });
+
+  // ── init ─────────────────────────────────────────────
+  describe('init', () => {
+    test('shows login view when no user is saved', () => {
+      mod._resetState();
+      mod.init();
+      expect(document.getElementById('login-view').style.display).toBe('block');
+      expect(document.getElementById('dashboard-view').style.display).toBe('none');
+    });
+
+    test('shows dashboard when a user is already set', () => {
+      const user = {
+        name: 'Test User', fname: 'Test', lname: 'User',
+        email: 'test@example.com', phone: '', bio: '', role: 'General Member',
+        tier: 'Guardian', chapter: 'Detroit HQ', since: '2024',
+        id: 'MBR-TEST01', avatar: '',
+      };
+      mod._setCurrentUser(user);
+      mod.init();
+      expect(document.getElementById('dashboard-view').style.display).toBe('block');
+    });
+
+    test('builds teaser rows on every call', () => {
+      document.getElementById('teaser-rows').innerHTML = '';
+      mod._resetState();
+      mod.init();
+      expect(document.querySelectorAll('#teaser-rows tr').length).toBe(6);
+    });
+  });
+
+  // ── joinNow ──────────────────────────────────────────
+  describe('joinNow', () => {
+    test('scrolls to the tiers section', () => {
+      const tiers = document.getElementById('tiers');
+      tiers.scrollIntoView = jest.fn();
+      mod.joinNow();
+      expect(tiers.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' });
+    });
+  });
+
+  // ── handleAvatarUpload ───────────────────────────────
+  describe('handleAvatarUpload', () => {
+    beforeEach(() => {
+      document.getElementById('login-email').value = 'test@example.com';
+      mod.handleLogin({ preventDefault: jest.fn() });
+    });
+
+    test('returns early when no file is provided', () => {
+      expect(() => mod.handleAvatarUpload({ files: [] })).not.toThrow();
+    });
+
+    test('shows error toast and clears input when file exceeds 2 MB', () => {
+      const file = { size: 3 * 1024 * 1024 };
+      const input = { files: [file], value: 'photo.jpg' };
+      mod.handleAvatarUpload(input);
+      expect(document.getElementById('toast').textContent).toBe('Photo must be under 2 MB.');
+      expect(input.value).toBe('');
+    });
+
+    test('reads the file and updates avatar for a valid upload', () => {
+      const mockResult = 'data:image/jpeg;base64,abc123';
+      const mockReader = { readAsDataURL: jest.fn(), onload: null };
+      global.FileReader = jest.fn(() => mockReader);
+
+      mod.handleAvatarUpload({ files: [{ size: 1024 }] });
+      mockReader.onload({ target: { result: mockResult } });
+
+      expect(mod._getCurrentUser().avatar).toBe(mockResult);
+    });
+
+    test('persists the avatar to localStorage on valid upload', () => {
+      const mockResult = 'data:image/jpeg;base64,xyz';
+      const mockReader = { readAsDataURL: jest.fn(), onload: null };
+      global.FileReader = jest.fn(() => mockReader);
+
+      mod.handleAvatarUpload({ files: [{ size: 512 }] });
+      mockReader.onload({ target: { result: mockResult } });
+
+      const stored = JSON.parse(localStorage.getItem('bbbc-member'));
+      expect(stored.avatar).toBe(mockResult);
+    });
+  });
+
+  // ── _setCurrentUser ──────────────────────────────────
+  describe('_setCurrentUser', () => {
+    test('sets the current user and makes it retrievable', () => {
+      const user = { name: 'Alice', email: 'alice@example.com' };
+      mod._setCurrentUser(user);
+      expect(mod._getCurrentUser()).toBe(user);
+    });
+  });
+
+  // ── toast ────────────────────────────────────────────
+  describe('toast', () => {
+    beforeEach(() => jest.useFakeTimers());
+    afterEach(() => jest.useRealTimers());
+
+    test('shows the toast with the given message', () => {
+      mod.toast('Test message');
+      const el = document.getElementById('toast');
+      expect(el.textContent).toBe('Test message');
+      expect(el.classList.contains('show')).toBe(true);
+    });
+
+    test('hides the toast after 3 seconds', () => {
+      mod.toast('Fade out');
+      jest.advanceTimersByTime(3000);
+      expect(document.getElementById('toast').classList.contains('show')).toBe(false);
+    });
+
+    test('does nothing when the toast element is absent', () => {
+      document.getElementById('toast').remove();
+      expect(() => mod.toast('no-op')).not.toThrow();
+    });
+  });
 });

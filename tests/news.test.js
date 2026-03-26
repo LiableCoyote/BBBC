@@ -282,6 +282,39 @@ describe('news.js', () => {
     });
   });
 
+  // ── init ─────────────────────────────────────────────
+  describe('init', () => {
+    test('renders sidebar recent articles', () => {
+      mod.init();
+      expect(document.querySelectorAll('#sb-recent li').length).toBeGreaterThan(0);
+    });
+
+    test('renders article cards in the grid', () => {
+      mod.init();
+      expect(document.querySelectorAll('.news-card').length).toBeGreaterThan(0);
+    });
+  });
+
+  // ── news card onclick ─────────────────────────────────
+  describe('news card onclick', () => {
+    test('clicking a rendered news card opens that article', () => {
+      mod.renderGrid([mod.ARTICLES[0]]);
+      const card = document.querySelector('.news-card');
+      card.onclick();
+      expect(document.getElementById('art-overlay').classList.contains('open')).toBe(true);
+    });
+  });
+
+  // ── sidebar item onclick ──────────────────────────────
+  describe('sidebar item onclick', () => {
+    test('clicking a sidebar item opens that article', () => {
+      mod.renderSidebar();
+      const item = document.querySelector('#sb-recent li');
+      item.onclick();
+      expect(document.getElementById('art-overlay').classList.contains('open')).toBe(true);
+    });
+  });
+
   // ── toast ─────────────────────────────────────────────
   describe('toast', () => {
     beforeEach(() => jest.useFakeTimers());

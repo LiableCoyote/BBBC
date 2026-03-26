@@ -87,4 +87,22 @@ describe('firsts.js', () => {
       expect(visible[0].dataset.cat).toBe('science');
     });
   });
+
+  // ── scroll progress bar ───────────────────────────────
+  describe('scroll progress bar', () => {
+    test('updates progress-bar width proportional to scroll position', () => {
+      const doc = document.documentElement;
+      Object.defineProperty(doc, 'scrollTop', { value: 50, configurable: true });
+      Object.defineProperty(doc, 'scrollHeight', { value: 550, configurable: true });
+      Object.defineProperty(doc, 'clientHeight', { value: 500, configurable: true });
+      window.dispatchEvent(new Event('scroll'));
+      // scrolled=50, total=550-500=50, pct=100%
+      expect(document.getElementById('progress-bar').style.width).toBe('100%');
+    });
+
+    test('does not throw when the progress-bar element is absent', () => {
+      document.getElementById('progress-bar').remove();
+      expect(() => window.dispatchEvent(new Event('scroll'))).not.toThrow();
+    });
+  });
 });
